@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 const MovieCard = ({ movie }) => {
-
+  console.log('MOVIE :::::: ', movie);
   return (
     <div key={movie._id} className="relative group m-[2rem] rounded-xl overflow-hidden">
       <Link to={`/movies/${movie._id}`}>

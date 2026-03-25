@@ -25,13 +25,13 @@ const MoviesContainerPage = () => {
   );
 
   return (
-    <div className="flex flex-col lg:flex-row lg:justify-between items-center">
-      <nav className=" ml-[4rem] flex flex-row xl:flex-col lg:flex-col md:flex-row sm:flex-row">
+    <div className="container mx-auto px-4 flex flex-col lg:flex-row lg:justify-between items-start lg:items-start gap-8">
+      <nav className="flex flex-row lg:flex-col gap-2 lg:gap-3">
         {genres?.map((g) => (
           <button
             key={g._id}
-            className={`transition duration-300 ease-in-out hover:bg-gray-200 block p-2 rounded mb-[1rem] text-lg ${
-              selectedGenre === g._id ? "bg-gray-200" : ""
+            className={`transition w-[200px] duration-300 ease-in-out block p-2 rounded-xl text-app-text border border-app-border bg-app-surface/20 hover:bg-app-surface/60 ${
+              selectedGenre === g._id ? "bg-app-surface/70 border-app-accent/40" : ""
             }`}
             onClick={() => handleGenreClick(g._id)}
           >
@@ -41,17 +41,17 @@ const MoviesContainerPage = () => {
       </nav>
 
       <section className="flex flex-col justify-center items-center w-full lg:w-auto">
-        <div className="w-full lg:w-[100rem] mb-8 ">
+        <div className="w-full mb-8 ">
           <h1 className="mb-5 section-title">Recommended for you</h1>
           <SliderUtil data={randomMovies} />
         </div>
 
-        <div className="w-full lg:w-[100rem] mb-8">
+        <div className="w-full mb-8">
           <h1 className="mb-5 section-title">Top picks</h1>
           <SliderUtil data={topMovies} />
         </div>
 
-        <div className="w-full lg:w-[100rem] mb-8">
+        <div className="w-full mb-8">
           <h1 className="mb-5 section-title">Explore more</h1>
           <SliderUtil data={filteredMovies} />
         </div>

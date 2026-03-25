@@ -37,58 +37,58 @@ const MovieDetails = () => {
 
   return (
     <>
-      <div>
-        <Link
-          to="/"
-          className="text-app-text font-semibold hover:underline ml-[20rem]"
-        >
+      <div className="container mx-auto px-4 pt-24">
+        <Link to="/" className="inline-flex text-app-text font-semibold hover:underline">
           Back to Movies
         </Link>
-      </div>
 
-      <div className="mt-[2rem]">
-        <div className="flex justify-center items-center">
+        <div className="mt-10">
+          <div className="flex justify-center items-center">
           <img
             src={movie?.image}
             alt={movie?.name}
-            className="w-[70%] rounded"
+            className="w-full max-w-3xl rounded-xl border border-app-border"
           />
-        </div>
-        {/* Container One */}
-        <div className="container  flex justify-between ml-[20rem] mt-[3rem]">
-          <section>
-            <h2 className="text-5xl my-4 font-extrabold">{movie?.name}</h2>
-            <p className="my-4 xl:w-[35rem] lg:w-[35rem] md:w-[30rem] text-app-muted">
-              {movie?.detail}
-            </p>
-          </section>
+          </div>
 
-          <div className="mr-[5rem]">
-            <p className="text-2xl font-semibold">
-              Release year: {movie?.year}
-            </p>
+          {/* Container One */}
+          <div className="mt-10 grid lg:grid-cols-[1fr_360px] gap-10">
+            <section>
+              <h2 className="text-4xl sm:text-5xl my-2 font-extrabold text-app-text">
+                {movie?.name}
+              </h2>
+              <p className="mt-4 text-app-muted max-w-[46rem]">
+                {movie?.detail}
+              </p>
+            </section>
 
             <div>
-              {movie?.cast.map((c) => (
-                <ul key={c._id}>
-                  <li className="mt-[1rem]">{c}</li>
-                </ul>
-              ))}
+              <p className="text-2xl font-semibold text-app-text">
+                Release year: {movie?.year}
+              </p>
+
+              <div className="mt-6">
+                {movie?.cast.map((c) => (
+                  <p key={c._id} className="text-app-muted mt-2">
+                    {c}
+                  </p>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="container ml-[20rem]">
-          <MovieTabs
-            loadingMovieReview={loadingMovieReview}
-            userInfo={userInfo}
-            submitHandler={submitHandler}
-            rating={rating}
-            setRating={setRating}
-            comment={comment}
-            setComment={setComment}
-            movie={movie}
-          />
+          <div className="mt-10">
+            <MovieTabs
+              loadingMovieReview={loadingMovieReview}
+              userInfo={userInfo}
+              submitHandler={submitHandler}
+              rating={rating}
+              setRating={setRating}
+              comment={comment}
+              setComment={setComment}
+              movie={movie}
+            />
+          </div>
         </div>
       </div>
     </>

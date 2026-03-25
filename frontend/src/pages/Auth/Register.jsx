@@ -48,104 +48,107 @@ const Register = () => {
   };
 
   return (
-    <div className="pl-[10rem] flex flex-wrap">
-      <div className="mr-[4rem] mt-[5rem]">
-        <h1 className="page-title mb-4">Create Account</h1>
+    <div>
+      <section className="mx-auto max-w-6xl px-4 pt-24 pb-12 flex flex-col lg:flex-row items-center gap-10">
+        <div className="w-full lg:w-1/2">
+          <h1 className="page-title mb-4">Create Account</h1>
 
-        <form onSubmit={submitHandler} className="container w-[40rem]">
-          <div className="my-[2rem]">
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-app-text"
-            >
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              className="mt-1 input"
-              placeholder="Enter Name"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
-          <div className="my-[2rem]">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-app-text"
-            >
-              Email Address
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="mt-1 input"
-              placeholder="Enter Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="my-[2rem]">
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-app-text"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              className="mt-1 input"
-              placeholder="Enter Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div className="my-[2rem]">
-            <label
-              htmlFor="confirmPassword"
-              className="block text-sm font-medium text-app-text"
-            >
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              id="confirmPassword"
-              className="mt-1 input"
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </div>
+          <form onSubmit={submitHandler} className="w-full max-w-md">
+            <div className="my-[2rem]">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-app-text"
+              >
+                Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                className="mt-1 input"
+                placeholder="Enter Name"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
+            <div className="my-[2rem]">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-app-text"
+              >
+                Email Address
+              </label>
+              <input
+                type="email"
+                id="email"
+                className="mt-1 input"
+                placeholder="Enter Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="my-[2rem]">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-app-text"
+              >
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                className="mt-1 input"
+                placeholder="Enter Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <div className="my-[2rem]">
+              <label
+                htmlFor="confirmPassword"
+                className="block text-sm font-medium text-app-text"
+              >
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                id="confirmPassword"
+                className="mt-1 input"
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </div>
 
-          <button
-            disabled={isLoading}
-            type="submit"
-            className="btn-primary my-[1rem]"
-          >
-            {isLoading ? "Creating account..." : "Create Account"}
-          </button>
-
-          {isLoading && <Loader />}
-        </form>
-
-        <div className="mt-4">
-          <p>
-            Already have an account?{" "}
-            <Link
-              to={redirect ? `/login?redirect=${redirect}` : "/login"}
-              className="text-app-secondary hover:underline"
+            <button
+              disabled={isLoading}
+              type="submit"
+              className="btn-primary my-[1rem] w-full"
             >
-              Login
-            </Link>
-          </p>
+              {isLoading ? "Creating account..." : "Create Account"}
+            </button>
+
+            {isLoading && <Loader />}
+          </form>
+
+          <div className="mt-4">
+            <p>
+              Already have an account?{" "}
+              <Link
+                to={redirect ? `/login?redirect=${redirect}` : "/login"}
+                className="text-app-secondary hover:underline"
+              >
+                Login
+              </Link>
+            </p>
+          </div>
         </div>
-      </div>
-      <img
-        src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        alt=""
-        className="h-[65rem] w-[55%] xl:block md:hidden sm:hidden rounded-lg"
-      />
+
+        <img
+          src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          alt=""
+          className="hidden lg:block w-[28rem] h-[32rem] object-cover rounded-xl border border-app-border"
+        />
+      </section>
     </div>
   );
 };

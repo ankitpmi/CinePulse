@@ -5,15 +5,19 @@ import MovieCard from "../pages/Movies/MovieCard";
 
 const SliderUtil = ({ data }) => {
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 2,
+    variableWidth: true
   };
 
+
+  console.log('MOVIES :::::: ', data);
+  
   return (
-    <Slider {...settings}>
+    <Slider {...settings}  className="w-full">
       {data?.map((movie) => (
         <MovieCard key={movie._id} movie={movie} />
       ))}
