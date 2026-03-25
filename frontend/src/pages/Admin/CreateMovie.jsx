@@ -113,7 +113,7 @@ const CreateMovie = () => {
           genre: "",
         });
 
-        toast.success("Movie Added To Database");
+        toast.success("Movie added to CinePulse");
       }
     } catch (error) {
       console.error("Failed to create movie: ", createMovieErrorDetail);
@@ -124,7 +124,9 @@ const CreateMovie = () => {
   return (
     <div className="container flex justify-center items-center mt-4">
       <form>
-        <p className="text-green-200 w-[50rem] text-2xl mb-4">Create Movie</p>
+        <p className="text-app-text w-[50rem] text-2xl mb-4 font-bold">
+          Add Movie
+        </p>
         <div className="mb-4">
           <label className="block">
             Name:
@@ -133,7 +135,7 @@ const CreateMovie = () => {
               name="name"
               value={movieData.name}
               onChange={handleChange}
-              className="border px-2 py-1 w-full"
+              className="input"
             />
           </label>
         </div>
@@ -145,7 +147,7 @@ const CreateMovie = () => {
               name="year"
               value={movieData.year}
               onChange={handleChange}
-              className="border px-2 py-1 w-full"
+              className="input"
             />
           </label>
         </div>
@@ -156,7 +158,7 @@ const CreateMovie = () => {
               name="detail"
               value={movieData.detail}
               onChange={handleChange}
-              className="border px-2 py-1 w-full"
+              className="textarea"
             ></textarea>
           </label>
         </div>
@@ -170,7 +172,7 @@ const CreateMovie = () => {
               onChange={(e) =>
                 setMovieData({ ...movieData, cast: e.target.value.split(", ") })
               }
-              className="border px-2 py-1 w-full"
+              className="input"
             />
           </label>
         </div>
@@ -181,7 +183,7 @@ const CreateMovie = () => {
               name="genre"
               value={movieData.genre}
               onChange={handleChange}
-              className="border px-2 py-1 w-full"
+              className="input"
             >
               {isLoadingGenres ? (
                 <option>Loading genres...</option>
@@ -225,10 +227,10 @@ const CreateMovie = () => {
         <button
           type="button"
           onClick={handleCreateMovie}
-          className="bg-teal-500 text-white px-4 py-2 rounded"
+          className="btn-primary"
           disabled={isCreatingMovie || isUploadingImage}
         >
-          {isCreatingMovie || isUploadingImage ? "Creating..." : "Create Movie"}
+          {isCreatingMovie || isUploadingImage ? "Adding..." : "Add Movie"}
         </button>
       </form>
     </div>

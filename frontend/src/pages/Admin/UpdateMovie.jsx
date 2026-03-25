@@ -98,7 +98,7 @@ const UpdateMovie = () => {
 
   const handleDeleteMovie = async () => {
     try {
-      toast.success("Movie deleted successfully");
+      toast.success("Movie removed from CinePulse");
       await deleteMovie(id);
       navigate("/movies");
     } catch (error) {
@@ -110,7 +110,7 @@ const UpdateMovie = () => {
   return (
     <div className="container flex justify-center items-center mt-4">
       <form>
-        <p className="text-green-200 w-[50rem] text-2xl mb-4">Update Movie</p>
+        <p className="text-app-text w-[50rem] text-2xl mb-4 font-bold">Edit Movie</p>
 
         <div className="mb-4">
           <label className="block">
@@ -120,7 +120,7 @@ const UpdateMovie = () => {
               name="name"
               value={movieData.name}
               onChange={handleChange}
-              className="border px-2 py-1 w-full"
+              className="input"
             />
           </label>
         </div>
@@ -132,7 +132,7 @@ const UpdateMovie = () => {
               name="year"
               value={movieData.year}
               onChange={handleChange}
-              className="border px-2 py-1 w-full"
+              className="input"
             />
           </label>
         </div>
@@ -143,7 +143,7 @@ const UpdateMovie = () => {
               name="detail"
               value={movieData.detail}
               onChange={handleChange}
-              className="border px-2 py-1 w-full"
+              className="textarea"
             />
           </label>
         </div>
@@ -157,7 +157,7 @@ const UpdateMovie = () => {
               onChange={(e) =>
                 setMovieData({ ...movieData, cast: e.target.value.split(", ") })
               }
-              className="border px-2 py-1 w-full"
+              className="input"
             />
           </label>
         </div>
@@ -191,19 +191,19 @@ const UpdateMovie = () => {
         <button
           type="button"
           onClick={handleUpdateMovie}
-          className="bg-teal-500 text-white px-4 py-2 rounded"
+          className="btn-primary"
           disabled={isUpdatingMovie || isUploadingImage}
         >
-          {isUpdatingMovie || isUploadingImage ? "Updating..." : "Update Movie"}
+          {isUpdatingMovie || isUploadingImage ? "Saving..." : "Save Changes"}
         </button>
 
         <button
           type="button"
           onClick={handleDeleteMovie}
-          className="bg-red-500 text-white px-4 py-2 rounded ml-2"
+          className="btn-danger ml-2"
           disabled={isUpdatingMovie || isUploadingImage}
         >
-          {isUpdatingMovie || isUploadingImage ? "Deleting..." : "Delete Movie"}
+          {isUpdatingMovie || isUploadingImage ? "Removing..." : "Delete"}
         </button>
       </form>
     </div>

@@ -50,20 +50,20 @@ const Register = () => {
   return (
     <div className="pl-[10rem] flex flex-wrap">
       <div className="mr-[4rem] mt-[5rem]">
-        <h1 className="text-2xl font-semibold mb-4">Register</h1>
+        <h1 className="page-title mb-4">Create Account</h1>
 
         <form onSubmit={submitHandler} className="container w-[40rem]">
           <div className="my-[2rem]">
             <label
               htmlFor="name"
-              className="block text-sm font-medium text-white"
+              className="block text-sm font-medium text-app-text"
             >
               Name
             </label>
             <input
               type="text"
               id="name"
-              className="mt-1 p-2 border rounded w-full"
+              className="mt-1 input"
               placeholder="Enter Name"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -72,14 +72,14 @@ const Register = () => {
           <div className="my-[2rem]">
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-white"
+              className="block text-sm font-medium text-app-text"
             >
               Email Address
             </label>
             <input
               type="email"
               id="email"
-              className="mt-1 p-2 border rounded w-full"
+              className="mt-1 input"
               placeholder="Enter Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -88,14 +88,14 @@ const Register = () => {
           <div className="my-[2rem]">
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-white"
+              className="block text-sm font-medium text-app-text"
             >
               Password
             </label>
             <input
               type="password"
               id="password"
-              className="mt-1 p-2 border rounded w-full"
+              className="mt-1 input"
               placeholder="Enter Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -104,14 +104,14 @@ const Register = () => {
           <div className="my-[2rem]">
             <label
               htmlFor="confirmPassword"
-              className="block text-sm font-medium text-white"
+              className="block text-sm font-medium text-app-text"
             >
               Confirm Password
             </label>
             <input
               type="password"
               id="confirmPassword"
-              className="mt-1 p-2 border rounded w-full"
+              className="mt-1 input"
               placeholder="Confirm Password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
@@ -121,20 +121,20 @@ const Register = () => {
           <button
             disabled={isLoading}
             type="submit"
-            className="bg-teal-500 text-white px-4 py-2 rounded cursor-pointer my-[1rem]"
+            className="btn-primary my-[1rem]"
           >
-            {isLoading ? "Registering..." : "Register"}
+            {isLoading ? "Creating account..." : "Create Account"}
           </button>
 
           {isLoading && <Loader />}
         </form>
 
         <div className="mt-4">
-          <p className="text-white">
+          <p>
             Already have an account?{" "}
             <Link
               to={redirect ? `/login?redirect=${redirect}` : "/login"}
-              className="text-teal-500 hover:underline"
+              className="text-app-secondary hover:underline"
             >
               Login
             </Link>

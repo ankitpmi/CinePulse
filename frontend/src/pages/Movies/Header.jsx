@@ -10,15 +10,15 @@ const Header = () => {
       <nav className="w-full md:w-[10rem] ml-0 md:ml-2 mb-4 md:mb-0">
         <Link
           to="/"
-          className="transition duration-300 ease-in-out hover:bg-teal-200  block p-2 rounded mb-1 md:mb-2 text-lg"
+          className="transition duration-300 ease-in-out hover:bg-app-surface/70 block p-2 rounded-xl mb-1 md:mb-2 text-lg"
         >
           Home
         </Link>
         <Link
           to="/movies"
-          className="transition duration-300 ease-in-out hover:bg-teal-200  block p-2 rounded mb-1 md:mb-2 text-lg"
+          className="transition duration-300 ease-in-out hover:bg-app-surface/70 block p-2 rounded-xl mb-1 md:mb-2 text-lg"
         >
-          Browse Movies
+          Browse
         </Link>
       </nav>
 

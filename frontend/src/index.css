@@ -2,16 +2,75 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background: #0f0f10;
-  color: #fff;
+@layer base {
+  :root {
+    --app-bg: #0B0F17;
+    --app-surface: #121826;
+    --app-text: #E5E7EB;
+    --app-muted: #9CA3AF;
+    --app-border: rgba(255, 255, 255, 0.08);
+    --app-accent: #14B8A6;
+    --app-secondary: #60A5FA;
+  }
+
+  body {
+    background: var(--app-bg);
+    color: var(--app-text);
+    min-height: 100vh;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  input,
+  textarea,
+  select {
+    background: transparent;
+    color: var(--app-text);
+  }
+
+  /* Ensure native selects/options remain readable in dark mode */
+  select option {
+    background: #0b0f17;
+    color: #E5E7EB;
+  }
+
+  ::selection {
+    background: rgba(20, 184, 166, 0.35);
+  }
 }
 
-input,
-textarea {
-  color: #000;
-}
+@layer components {
+  .card {
+    @apply bg-app-surface border border-app-border rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.35)];
+  }
 
-select option {
-  color: black;
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-xl bg-app-accent px-5 py-2.5 font-semibold text-app-accentText transition hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-app-accent/40 disabled:opacity-60 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-xl bg-app-secondary px-5 py-2.5 font-semibold text-app-accentText transition hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-app-secondary/40 disabled:opacity-60 disabled:cursor-not-allowed;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center rounded-xl bg-app-danger px-5 py-2.5 font-semibold text-white transition hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-app-danger/40 disabled:opacity-60 disabled:cursor-not-allowed;
+  }
+
+  .input {
+    @apply w-full rounded-xl border border-app-border bg-transparent px-4 py-2.5 outline-none transition placeholder:text-app-muted focus:border-app-accent/60 focus:ring-2 focus:ring-app-accent/30;
+  }
+
+  .textarea {
+    @apply w-full rounded-xl border border-app-border bg-transparent px-4 py-2.5 outline-none transition placeholder:text-app-muted focus:border-app-accent/60 focus:ring-2 focus:ring-app-accent/30;
+  }
+
+  .page-title {
+    @apply text-3xl sm:text-4xl font-extrabold tracking-tight;
+  }
+
+  .section-title {
+    @apply text-xl sm:text-2xl font-bold;
+  }
 }

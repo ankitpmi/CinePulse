@@ -44,9 +44,9 @@ const Main = () => {
               gradient="from-green-500 to-lime-400"
             />
           </div>
-          <div className="flex justify-between w-[90%] text-white mt-10 font-bold">
-            <p>Top Content</p>
-            <p>Comments</p>
+          <div className="flex justify-between w-[90%] text-app-text mt-10 font-bold">
+            <p>Trending</p>
+            <p>Reviews</p>
           </div>
 
           {topMovies?.map((movie) => (

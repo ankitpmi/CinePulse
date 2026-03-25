@@ -83,24 +83,26 @@ const AllMovies = () => {
           >
             <div className="absolute inset-0 bg-gradient-to-b from-gray-800 to-black opacity-60"></div>
 
-            <div className="relative z-10 text-center text-white mt-[10rem]">
-              <h1 className="text-8xl font-bold mb-4">The Movies Hub</h1>
-              <p className="text-2xl">
-                Cinematic Odyssey: Unveiling the Magic of Movies
+            <div className="relative z-10 text-center mt-[10rem]">
+              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold mb-4">
+                CinePulse
+              </h1>
+              <p className="text-base sm:text-lg lg:text-2xl text-app-muted">
+                Discover your next favorite film
               </p>
             </div>
 
             <section className="absolute -bottom-[5rem]">
               <input
                 type="text"
-                className="w-[100%] h-[5rem] border px-10 outline-none rounded"
-                placeholder="Search Movie"
+                className="w-full h-[5rem] input px-10"
+                placeholder="Search movies"
                 value={moviesFilter.searchTerm}
                 onChange={handleSearchChange}
               />
               <section className="sorts-container mt-[2rem] ml-[10rem]  w-[30rem]">
                 <select
-                  className="border p-2 rounded text-black"
+                  className="input text-app-text p-2"
                   value={moviesFilter.selectedGenre}
                   onChange={(e) => handleGenreClick(e.target.value)}
                 >
@@ -113,7 +115,7 @@ const AllMovies = () => {
                 </select>
 
                 <select
-                  className="border p-2 rounded ml-4 text-black"
+                  className="input text-app-text ml-4 p-2"
                   value={moviesFilter.selectedYear}
                   onChange={(e) => handleYearChange(e.target.value)}
                 >
@@ -126,14 +128,14 @@ const AllMovies = () => {
                 </select>
 
                 <select
-                  className="border p-2 rounded ml-4 text-black"
+                  className="input text-app-text ml-4 p-2"
                   value={moviesFilter.selectedSort}
                   onChange={(e) => handleSortChange(e.target.value)}
                 >
-                  <option value="">Sort By</option>
-                  <option value="new">New Movies</option>
-                  <option value="top">Top Movies</option>
-                  <option value="random">Random Movies</option>
+                  <option value="">Sort</option>
+                  <option value="new">Latest</option>
+                  <option value="top">Top picks</option>
+                  <option value="random">Random picks</option>
                 </select>
               </section>
             </section>

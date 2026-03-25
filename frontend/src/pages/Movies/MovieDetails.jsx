@@ -40,9 +40,9 @@ const MovieDetails = () => {
       <div>
         <Link
           to="/"
-          className="  text-white font-semibold hover:underline ml-[20rem]"
+          className="text-app-text font-semibold hover:underline ml-[20rem]"
         >
-          Go Back
+          Back to Movies
         </Link>
       </div>
 
@@ -65,7 +65,7 @@ const MovieDetails = () => {
 
           <div className="mr-[5rem]">
             <p className="text-2xl font-semibold">
-              Releasing Date: {movie?.year}
+              Release year: {movie?.year}
             </p>
 
             <div>
