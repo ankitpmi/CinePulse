@@ -81,9 +81,9 @@ const AllMovies = () => {
             className="relative h-[50rem] w-screen mb-10 flex items-center justify-center bg-cover"
             style={{ backgroundImage: `url(${banner})` }}
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-gray-800 to-black opacity-60"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-app-surface/80 to-app-bg opacity-60"></div>
 
-            <div className="relative z-10 text-center mt-[10rem]">
+            <div className="relative z-10 text-center text-app-text mt-[10rem]">
               <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold mb-4">
                 CinePulse
               </h1>

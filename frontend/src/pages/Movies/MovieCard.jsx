@@ -11,7 +11,7 @@ const MovieCard = ({ movie }) => {
         />
       </Link>
 
-      <p className="absolute inset-0 opacity-0 transition duration-300 ease-in-out group-hover:opacity-100 bg-gradient-to-t from-black/70 via-black/25 to-transparent flex items-end p-4">
+      <p className="absolute inset-0 opacity-0 transition duration-300 ease-in-out group-hover:opacity-100 bg-gradient-to-t from-app-surface/90 via-app-surface/30 to-transparent flex items-end p-4">
         <span className="text-app-text font-semibold">{movie.name}</span>
       </p>
     </div>

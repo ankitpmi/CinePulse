@@ -7,12 +7,12 @@ const VideoCard = ({ image, title, date, comments }) => {
         </div>
 
         <div className="ml-4">
-          <h2 className="text-lg text-white">{title}</h2>
-          <p className="text-gray-500 mb-3">{date}</p>
+          <h2 className="text-lg text-app-text">{title}</h2>
+          <p className="text-app-muted mb-3">{date}</p>
         </div>
 
         <div className="flex-grow mb-5 flex justify-end items-center">
-          <div className="text-white text-lg">{comments}</div>
+          <div className="text-app-text text-lg">{comments}</div>
         </div>
       </div>
     </>

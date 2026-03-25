@@ -4,13 +4,13 @@
 
 @layer base {
   :root {
-    --app-bg: #0B0F17;
-    --app-surface: #121826;
-    --app-text: #E5E7EB;
-    --app-muted: #9CA3AF;
-    --app-border: rgba(255, 255, 255, 0.08);
-    --app-accent: #14B8A6;
-    --app-secondary: #60A5FA;
+    --app-bg: #222831;
+    --app-surface: #31363F;
+    --app-text: #EEEEEE;
+    --app-muted: rgba(238, 238, 238, 0.7);
+    --app-border: rgba(238, 238, 238, 0.14);
+    --app-accent: #76ABAE;
+    --app-secondary: #76ABAE;
   }
 
   body {
@@ -32,12 +32,12 @@
 
   /* Ensure native selects/options remain readable in dark mode */
   select option {
-    background: #0b0f17;
-    color: #E5E7EB;
+    background: var(--app-bg);
+    color: var(--app-text);
   }
 
   ::selection {
-    background: rgba(20, 184, 166, 0.35);
+    background: rgba(118, 171, 174, 0.35);
   }
 }
 
@@ -55,7 +55,7 @@
   }
 
   .btn-danger {
-    @apply inline-flex items-center justify-center rounded-xl bg-app-danger px-5 py-2.5 font-semibold text-white transition hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-app-danger/40 disabled:opacity-60 disabled:cursor-not-allowed;
+    @apply inline-flex items-center justify-center rounded-xl bg-app-danger px-5 py-2.5 font-semibold text-app-text transition hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-app-danger/40 disabled:opacity-60 disabled:cursor-not-allowed;
   }
 
   .input {

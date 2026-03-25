@@ -29,11 +29,11 @@ const AllComments = () => {
           {m?.reviews.map((review) => (
             <div
               key={review._id}
-              className="bg-[#1A1A1A] p-4 rounded-lg w-[50%] mt-[2rem]"
+              className="bg-app-surface p-4 rounded-xl w-[50%] mt-[2rem] border border-app-border"
             >
               <div className="flex justify-between">
-                <strong className="text-[#B0B0B0]">{review.name}</strong>
-                <p className="text-[#B0B0B0]">
+                <strong className="text-app-muted">{review.name}</strong>
+                <p className="text-app-muted">
                   {review.createdAt.substring(0, 10)}
                 </p>
               </div>
@@ -41,7 +41,7 @@ const AllComments = () => {
               <p className="my-4">{review.comment}</p>
 
               <button
-                className="text-red-500"
+                className="text-app-accent hover:underline"
                 onClick={() => handleDeleteComment(m._id, review._id)}
               >
                 Delete

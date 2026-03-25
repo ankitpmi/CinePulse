@@ -29,19 +29,19 @@ const Main = () => {
               pill="Users"
               content={visitors?.length}
               info="20.2k more then usual"
-              gradient="from-teal-500 to-lime-400"
+              gradient="from-app-accent to-app-surface"
             />
             <SecondaryCard
               pill="Comments"
               content={sumOfCommentsLength}
               info="742.8 more then usual"
-              gradient="from-[#CCC514] to-[#CDCB8E]"
+              gradient="from-app-surface to-app-accent"
             />
             <SecondaryCard
               pill="Movies"
               content={allMovies?.length}
               info="372+ more then usual"
-              gradient="from-green-500 to-lime-400"
+              gradient="from-app-accent to-app-surface"
             />
           </div>
           <div className="flex justify-between w-[90%] text-app-text mt-10 font-bold">
