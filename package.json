@@ -8,7 +8,7 @@
     "fullstack": "concurrently \"npm run backend\" \"npm run frontend\"",
     "backend": "nodemon backend/index.js",
     "frontend": "cd frontend && npm run dev",
-    "backend:container": "docker run --add-host=host.docker.internal:host-gateway --env-file .env.docker -p 3000:3000 cine-pulse-backend:v1",
+    "backend:container": "docker run -d --add-host=host.docker.internal:host-gateway --env-file .env.docker -p 3000:3000 --network cine-network --name cine-backend cine-pulse-backend:v1",
     "backend:build": "docker build -t cine-pulse-backend:v1 ."
   },
   "keywords": [],

@@ -1,0 +1,76 @@
+frontend
+├── .dockerignore
+├── .eslintrc.cjs
+├── .gitignore
+├── README.md
+├── dist
+│   ├── assets
+│   │   ├── ajax-loader-XJzBMpIy.gif
+│   │   ├── banner-fk3lGTbB.jpg
+│   │   ├── index-6tVC3_0k.js
+│   │   ├── index-XuRyjqPj.css
+│   │   └── slick-Zcw5u4Ni.svg
+│   └── index.html
+├── index.html
+├── package-lock.json
+├── package.json
+├── postcss.config.js
+├── src
+│   ├── App.jsx
+│   ├── assets
+│   │   └── banner.jpg
+│   ├── component
+│   │   ├── GenreForm.jsx
+│   │   ├── Loader.jsx
+│   │   ├── Modal.jsx
+│   │   └── SliderUtil.jsx
+│   ├── index.css
+│   ├── main.jsx
+│   ├── pages
+│   │   ├── Admin
+│   │   │   ├── AdminMoviesList.jsx
+│   │   │   ├── AdminRoute.jsx
+│   │   │   ├── AllComments.jsx
+│   │   │   ├── CreateMovie.jsx
+│   │   │   ├── Dashboard
+│   │   │   │   ├── AdminDashboard.jsx
+│   │   │   │   ├── Main
+│   │   │   │   │   ├── Main.jsx
+│   │   │   │   │   ├── PrimaryCard.jsx
+│   │   │   │   │   ├── RealTimeCard.jsx
+│   │   │   │   │   ├── SecondaryCard.jsx
+│   │   │   │   │   └── VideoCard.jsx
+│   │   │   │   └── Sidebar
+│   │   │   │       └── Sidebar.jsx
+│   │   │   ├── GenreList.jsx
+│   │   │   └── UpdateMovie.jsx
+│   │   ├── Auth
+│   │   │   ├── Login.jsx
+│   │   │   ├── Navigation.jsx
+│   │   │   ├── PrivateRoute.jsx
+│   │   │   └── Register.jsx
+│   │   ├── Home.jsx
+│   │   ├── Movies
+│   │   │   ├── AllMovies.jsx
+│   │   │   ├── Header.jsx
+│   │   │   ├── MovieCard.jsx
+│   │   │   ├── MovieDetails.jsx
+│   │   │   ├── MovieTabs.jsx
+│   │   │   └── MoviesContainerPage.jsx
+│   │   └── User
+│   │       └── Profile.jsx
+│   └── redux
+│       ├── api
+│       │   ├── apiSlice.js
+│       │   ├── genre.js
+│       │   ├── movies.js
+│       │   └── users.js
+│       ├── constants.js
+│       ├── features
+│       │   ├── auth
+│       │   │   └── authSlice.js
+│       │   └── movies
+│       │       └── moviesSlice.js
+│       └── store.js
+├── tailwind.config.js
+└── vite.config.js
