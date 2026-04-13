@@ -9,7 +9,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - .docker/mongo_data:/data/db
+      - mongo_data:/data/db
     networks:
       - cine-network
     healthcheck:
@@ -51,3 +51,6 @@ services:
 networks:
   cine-network:
     driver: bridge
+
+volumes:
+  mongo_data: 
