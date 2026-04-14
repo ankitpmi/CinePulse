@@ -24,7 +24,7 @@ jobs:
         run: npm ci
 
       - name: Check backend starts without error
-        run: node --check index.js
+        run: node --check backend/index.js
 
   test-frontend:
     name: Frontend — install & build
