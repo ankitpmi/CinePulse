@@ -1,0 +1,15 @@
+name: Backend CI/CD
+
+on:
+  push:
+    branches: ['*']
+  pull_request:
+    branches: [main]
+
+jobs:
+  say-hello:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print Hellow World
+        run: echo "Hello World from Backend CI/CD workflow!"
