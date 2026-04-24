@@ -30,6 +30,10 @@ app.use("/api/v1/genre", genreRoutes);
 app.use("/api/v1/movies", moviesRoutes);
 app.use("/api/v1/upload", uploadRoutes);
 
+app.use("/healthStatus", (req, res) => {
+    res.status(200).send('Backend server healthy!!!');
+})
+
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname + "/uploads")));
 
