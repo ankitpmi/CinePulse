@@ -28,3 +28,6 @@ jobs:
       - name: Build React app
         working-directory: frontend
         run: npm run build
+      
+      - name: Print success message
+        run: echo "Frontend build completed successfully!"
