@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  say-hello:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
