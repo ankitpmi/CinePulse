@@ -2,21 +2,21 @@ version: "3.8"
 
 services:
 
-  mongo:
-    image: mongo:6
-    container_name: cine-mongo
-    restart: unless-stopped
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo_data:/data/db
-    networks:
-      - cine-network
-    healthcheck:
-      test: ["CMD", "mongosh", "--eval", "db.runCommand({ ping: 1 })"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+  # mongo:
+  #   image: mongo:6
+  #   container_name: cine-mongo
+  #   restart: unless-stopped
+  #   ports:
+  #     - "27017:27017"
+  #   volumes:
+  #     - mongo_data:/data/db
+  #   networks:
+  #     - cine-network
+  #   healthcheck:
+  #     test: ["CMD", "mongosh", "--eval", "db.runCommand({ ping: 1 })"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
    
 
   backend:
@@ -28,9 +28,9 @@ services:
       - "3000"
     env_file:
       - .env.docker
-    depends_on:
-      mongo:
-        condition: service_healthy
+    # depends_on:
+    #   mongo:
+    #     condition: service_healthy
     volumes:
       - ./uploads:/app/uploads
     networks:
