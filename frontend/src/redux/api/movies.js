@@ -8,7 +8,7 @@ export const moviesApiSlice = apiSlice.injectEndpoints({
     }),
     createMovie: builder.mutation({
       query: (newMovie) => ({
-        url: `${MOVIE_URL}/create-movie`,
+        url: `/${MOVIE_URL}/create-movie`,
         method: "POST",
         body: newMovie,
       }),
