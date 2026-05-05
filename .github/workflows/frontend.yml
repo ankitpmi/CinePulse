@@ -57,7 +57,7 @@ jobs:
 
       # ── Changelog + Release (main only) ──────────────────────────
       - name: Generate Changelog
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/main'
         id: changelog
         uses: TriPSs/conventional-changelog-action@v5
         with:
