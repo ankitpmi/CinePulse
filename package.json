@@ -1,7 +1,7 @@
 {
   "name": "CinePulse",
   "version": "1.0.0",
-  "description": "",
+  "description": "MERN Movies App",
   "type": "module",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,8 @@
     "backend:container": "docker run -d --add-host=host.docker.internal:host-gateway --env-file .env.docker -p 3000:3000 --network cine-network --name cine-backend cine-pulse-backend:v1",
     "backend:build": "docker build -t cine-pulse-backend:v1 .",
     "seed:genres": "node backend/seed/genre.seed.js",
-    "seed:movies": "node backend/seed/movie.seed.js"
+    "seed:movies": "node backend/seed/movie.seed.js",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",
@@ -28,5 +29,10 @@
     "mongoose": "^8.1.1",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.0.3"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.5.3",
+    "@commitlint/config-conventional": "^20.5.3",
+    "husky": "^9.1.7"
   }
 }

@@ -1,4 +1,8 @@
 MERN-Movies-App
+    .github
+        └── workflows
+            ├── backend.yml
+            └── frontend.yml
     backend
     ├── config
     │   └── db.js
@@ -104,6 +108,7 @@ MERN-Movies-App
     └── vite.config.js
     uploads
     ├── image-1776072934842.png
+   
     .dockerignore
     .env
     docker-compose.yml
