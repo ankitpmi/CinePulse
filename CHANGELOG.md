@@ -1,4 +1,4 @@
-# 1.1.0 (2026-05-05)
+# [1.2.0](https://github.com/ankitpmi/CinePulse/compare/v1.1.0...v1.2.0) (2026-05-05)
 
 
 ### Bug Fixes
@@ -9,6 +9,7 @@
 
 ### Features
 
+* **frontend:** added border on search input ([55af4ff](https://github.com/ankitpmi/CinePulse/commit/55af4ff4e0dcdf6853a472526bd256609d4c6291))
 * **project:** added conventional commit ([944686a](https://github.com/ankitpmi/CinePulse/commit/944686af6629284af591be8000e7523ed1004643))
 
 
