@@ -75,7 +75,23 @@ jobs:
         with:
           tag_name: ${{ steps.changelog.outputs.tag }}
           name: 🚀 CinePulse Frontend Release ${{ steps.changelog.outputs.tag }}
-          body: ${{ steps.changelog.outputs.clean_changelog }}
+          body: |
+            🚀 New frontend build deployed successfully
+
+            🔹 Commit SHA: ${{ github.sha }}
+            🔹 Branch: ${{ github.ref_name }}
+            🔹 Triggered by: ${{ github.actor }}
+
+            📦 Commit Message:
+            ${{ github.event.head_commit.message }}
+
+            🕒 Build Time: ${{ github.event.head_commit.timestamp }}
+
+            ---
+
+            ## 📋 Changelog
+            ${{ steps.changelog.outputs.clean_changelog }}
+
         env:
           GITHUB_TOKEN: ${{ secrets.DEVOPS_GITHUB_TOKEN }}
 
