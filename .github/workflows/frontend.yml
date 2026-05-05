@@ -1,4 +1,6 @@
 name: Frontend CI/CD
+permissions:
+  contents: write
 
 on:
   push:
@@ -49,3 +51,24 @@ jobs:
       
       - name: Done
         run: echo "🚀 Frontend deployed successfully!"
+
+      - name: Create Git tag and Release
+        if: github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.${{ github.run_number }}
+          name: 🚀 Frontend Release v1.${{ github.run_number }}
+          body: |
+            🚀 New frontend build deployed successfully
+
+            🔹 Commit SHA: ${{ github.sha }}
+            🔹 Branch: ${{ github.ref_name }}
+            🔹 Triggered by: ${{ github.actor }}
+
+            📦 Commit Message:
+            ${{ github.event.head_commit.message }}
+
+            🕒 Build Time: ${{ github.event.head_commit.timestamp }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEVOPS_GITHUB_TOKEN }}
+
