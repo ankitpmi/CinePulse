@@ -30,6 +30,22 @@ jobs:
       - name: Build React app
         working-directory: frontend
         run: npm run build
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
       
       - name: Print success message
-        run: echo "Frontend build completed successfully!"
+        run: echo "Frontend build created successfully 📦 📚"
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      
+      - name: Deploy to S3
+        run: |
+          aws s3 sync frontend/dist s3://${{ secrets.S3_BUCKET_NAME }} --delete
+      
+      - name: Done
+        run: echo "🚀 Frontend deployed successfully!"
