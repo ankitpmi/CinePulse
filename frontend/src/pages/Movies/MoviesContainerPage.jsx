@@ -26,7 +26,7 @@ const MoviesContainerPage = () => {
 
   return (
     <div className="container mx-auto px-4 flex flex-col lg:flex-row lg:justify-between items-start lg:items-start gap-8">
-      {/* <nav className="flex flex-row lg:flex-col gap-2 lg:gap-3">
+      <nav className="flex flex-row lg:flex-col gap-2 lg:gap-3">
         {genres?.map((g) => (
           <button
             key={g._id}
@@ -38,7 +38,7 @@ const MoviesContainerPage = () => {
             {g.name}
           </button>
         ))}
-      </nav> */}
+      </nav>
 
       <section className="flex flex-col justify-center items-center w-full lg:w-auto">
         <div className="w-full mb-8 ">
