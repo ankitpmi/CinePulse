@@ -49,17 +49,17 @@ services:
     networks:
     - cine-network   # 👈 MUST BE PRESENT
 
-  frontend:
-    build:
-      context: ./frontend
-    container_name: cine-frontend
-    restart: unless-stopped
-    ports:
-      - "5173:80"
-    depends_on:
-      - backend
-    networks:
-      - cine-network
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #   container_name: cine-frontend
+  #   restart: unless-stopped
+  #   ports:
+  #     - "5173:80"
+  #   depends_on:
+  #     - backend
+  #   networks:
+  #     - cine-network
 
 networks:
   cine-network:
