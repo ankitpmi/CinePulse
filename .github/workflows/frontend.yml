@@ -30,6 +30,8 @@ jobs:
       - name: Build React app
         working-directory: frontend
         run: npm run build
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
       
       - name: Print success message
         run: echo "Frontend build created successfully 📦 📚"
