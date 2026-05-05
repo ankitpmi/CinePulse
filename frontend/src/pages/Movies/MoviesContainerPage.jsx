@@ -26,7 +26,7 @@ const MoviesContainerPage = () => {
 
   return (
     <div className="container mx-auto px-4 flex flex-col lg:flex-row lg:justify-between items-start lg:items-start gap-8">
-      {/* <nav className="flex flex-row lg:flex-col gap-2 lg:gap-3">
+      <nav className="flex flex-row lg:flex-col gap-2 lg:gap-3">
         {genres?.map((g) => (
           <button
             key={g._id}
@@ -38,7 +38,7 @@ const MoviesContainerPage = () => {
             {g.name}
           </button>
         ))}
-      </nav> */}
+      </nav>
 
       <section className="flex flex-col justify-center items-center w-full lg:w-auto">
         <div className="w-full mb-8 ">
@@ -51,10 +51,10 @@ const MoviesContainerPage = () => {
           <SliderUtil data={topMovies} />
         </div>
 
-        {/* <div className="w-full mb-8">
+        <div className="w-full mb-8">
           <h1 className="mb-5 section-title">Explore more</h1>
           <SliderUtil data={filteredMovies} />
-        </div> */}
+        </div>
       </section>
     </div>
   );
