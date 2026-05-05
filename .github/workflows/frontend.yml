@@ -57,7 +57,7 @@ jobs:
 
       # ── Changelog + Release (main only) ──────────────────────────
       - name: Generate Changelog
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         id: changelog
         uses: TriPSs/conventional-changelog-action@v5
         with:
@@ -70,22 +70,12 @@ jobs:
           git-message: "chore(release): {version} [skip ci]"
 
       - name: Create Git tag and Release
-        if: github.ref == 'refs/heads/main' 
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push' && steps.changelog.outputs.skipped == 'false'     
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.${{ github.run_number }}
-          name: 🚀 Frontend Release v1.${{ github.run_number }}
-          body: |
-            🚀 New frontend build deployed successfully
-
-            🔹 Commit SHA: ${{ github.sha }}
-            🔹 Branch: ${{ github.ref_name }}
-            🔹 Triggered by: ${{ github.actor }}
-
-            📦 Commit Message:
-            ${{ github.event.head_commit.message }}
-
-            🕒 Build Time: ${{ github.event.head_commit.timestamp }}
+          tag_name: ${{ steps.changelog.outputs.tag }}
+          name: 🚀 CinePulse Frontend Release ${{ steps.changelog.outputs.tag }}
+          body: ${{ steps.changelog.outputs.clean_changelog }}
         env:
           GITHUB_TOKEN: ${{ secrets.DEVOPS_GITHUB_TOKEN }}
 
