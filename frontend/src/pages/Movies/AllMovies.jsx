@@ -95,7 +95,7 @@ const AllMovies = () => {
             <section className="absolute -bottom-[5rem]">
               <input
                 type="text"
-                className="w-full h-[5rem] input px-10"
+                className="w-full h-[5rem] input px-10 border-2 border-black/40"
                 placeholder="Search movies"
                 value={moviesFilter.searchTerm}
                 onChange={handleSearchChange}
