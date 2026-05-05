@@ -51,10 +51,10 @@ const MoviesContainerPage = () => {
           <SliderUtil data={topMovies} />
         </div>
 
-        {/* <div className="w-full mb-8">
+        <div className="w-full mb-8">
           <h1 className="mb-5 section-title">Explore more</h1>
           <SliderUtil data={filteredMovies} />
-        </div> */}
+        </div>
       </section>
     </div>
   );
