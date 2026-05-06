@@ -3,11 +3,20 @@ name: Backend CI/CD
 on:
   push:
     branches:
-      - main
+      - main                    # deploy only on main
     paths:
-      - "backend/**"        # ✅ only backend changes
-      - "docker-compose.yml" # ✅ docker changes affect backend
-      - "Dockerfile"         # ✅ dockerfile changes affect backend
+      - "backend/**"
+      - "docker-compose.yml"
+      - "Dockerfile"
+      - "package.json"
+  pull_request:
+    branches:
+      - main                    # just validate on PR, no deploy
+    paths:
+      - "backend/**"
+      - "docker-compose.yml"
+      - "Dockerfile"
+      - "package.json"
 
 jobs:
   deploy:
@@ -15,13 +24,12 @@ jobs:
 
     steps:
       - name: Deploy Backend to EC2
+        if: github.event_name == 'push'       # 👈 deploy only on actual push to main, not PR
         uses: appleboy/ssh-action@v1.0.3
-
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
-
           script: |
             cd /home/ubuntu/CinePulse
 

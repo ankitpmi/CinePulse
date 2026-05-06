@@ -39,6 +39,8 @@ app.use("/apiOne", (req, res) => {
     res.status(200).send('apiOne is working!!!');
 })
 
+
+
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname + "/uploads")));
 
