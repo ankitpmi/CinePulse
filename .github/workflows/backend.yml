@@ -1,4 +1,6 @@
 name: Backend CI/CD
+permissions:
+  contents: write
 
 on:
   push:
@@ -42,6 +44,10 @@ jobs:
             echo "Pulling latest code..."
             git pull origin main
 
+            echo "Saving current commit for rollback..."
+            PREVIOUS_COMMIT=$(git rev-parse HEAD~1)
+            echo "Previous commit: $PREVIOUS_COMMIT"
+
             echo "Rebuilding backend container..."
             docker compose up -d --build backend || (
               echo "❌ Build failed! Rolling back..."
@@ -65,6 +71,7 @@ jobs:
               echo "Attempt $i failed, retrying in 5s..."
               sleep 5
             done
+
             if [ "$HEALTH_PASSED" = false ]; then
               echo "❌ Health check failed! Rolling back..."
               git checkout $PREVIOUS_COMMIT -- backend/ package.json
@@ -74,6 +81,7 @@ jobs:
             fi
 
             echo "✅ Backend deployed and healthy!"
+
       - name: Configure Git
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
@@ -93,9 +101,9 @@ jobs:
           release-count: "0"
           skip-commit: "false"
           skip-on-empty: "true"
-          git-message: "chore(release): {version} [skip ci]"
-          git-user-name: "ankitpmi"                                   # 👈 add this
-          git-user-email: "ankit.prajapati@mindinventory.com"             # 👈 add this
+          git-message: "chore(release): {version}"
+          git-user-name: "ankitpmi"
+          git-user-email: "ankit.prajapati@mindinventory.com"
 
       - name: Create GitHub Release
         if: |
