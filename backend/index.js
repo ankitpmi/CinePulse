@@ -35,13 +35,6 @@ app.use("/api/v1/upload", uploadRoutes);
 app.use("/healthStatus", (req, res) => {
     res.status(200).send('Backend server healthy!!!');
 })
-app.use("/apiOne", (req, res) => {
-    res.status(200).send('apiOne is working!!!');
-})
-
-app.use("/apiTwo", (req, res) => {
-    res.status(200).send('apiTwo is working!!!');
-})
 
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname + "/uploads")));
