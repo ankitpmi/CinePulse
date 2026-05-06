@@ -56,11 +56,22 @@ jobs:
             sleep 15
 
             echo "Checking backend health..."
+            HEALTH_PASSED=false
             for i in 1 2 3 4 5; do
-              curl -f http://localhost:3000/healthStatus && break
+              if docker exec cine-backend curl -f http://localhost:3000/healthStatus; then
+                HEALTH_PASSED=true
+                break
+              fi
               echo "Attempt $i failed, retrying in 5s..."
               sleep 5
-            done || (echo "❌ Health check failed!" && exit 1)
+            done
+            if [ "$HEALTH_PASSED" = false ]; then
+              echo "❌ Health check failed! Rolling back..."
+              git checkout $PREVIOUS_COMMIT -- backend/ package.json
+              docker compose up -d --build backend
+              echo "⚠️ Rolled back to previous version!"
+              exit 1
+            fi
 
             echo "✅ Backend deployed and healthy!"
 
