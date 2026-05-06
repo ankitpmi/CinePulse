@@ -2,14 +2,36 @@ name: Backend CI/CD
 
 on:
   push:
-    branches: ['*']
-  pull_request:
-    branches: [main]
+    branches:
+      - main
+
+    paths-ignore:
+      - "frontend/**"
+      - "README.md"
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Print Hellow World
-        run: echo "Hello World from Backend CI/CD workflow!"
+      - name: Deploy Backend to EC2
+        uses: appleboy/ssh-action@v1.0.3
+
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+
+          script: |
+            cd /home/ubuntu/CinePulse
+
+            echo "Pulling latest code..."
+            git pull origin main
+
+            echo "Rebuilding backend container only..."
+            docker compose up -d --build backend
+
+            echo "Cleaning unused docker images..."
+            docker image prune -f
+
+            echo "Deployment completed successfully!"
