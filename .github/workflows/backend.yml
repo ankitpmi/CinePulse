@@ -35,7 +35,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          script_stop: true                         # ✅ fail if any command fails
+          script_stop: true
           script: |
             cd /home/ubuntu/CinePulse
 
@@ -53,10 +53,14 @@ jobs:
             docker image prune -f
 
             echo "Waiting for backend to start..."
-            sleep 10
+            sleep 15
 
             echo "Checking backend health..."
-            curl -f http://localhost:3000/healthStatus  || exit 1
+            for i in 1 2 3 4 5; do
+              curl -f http://localhost:3000/healthStatus && break
+              echo "Attempt $i failed, retrying in 5s..."
+              sleep 5
+            done || (echo "❌ Health check failed!" && exit 1)
 
             echo "✅ Backend deployed and healthy!"
 
