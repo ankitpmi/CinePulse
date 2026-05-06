@@ -74,6 +74,12 @@ jobs:
             fi
 
             echo "✅ Backend deployed and healthy!"
+      - name: Configure Git
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          git config --global user.name "ankitpmi"
+          git config --global user.email "ankit.prajapati@mindinventory.com"
+          git remote set-url origin https://x-access-token:${{ secrets.DEVOPS_GITHUB_TOKEN }}@github.com/ankitpmi/CinePulse.git
 
       # ── Changelog + Release (main push only) ─────────────────────
       - name: Generate Changelog
