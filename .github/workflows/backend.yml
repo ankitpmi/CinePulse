@@ -4,10 +4,10 @@ on:
   push:
     branches:
       - main
-
-    paths-ignore:
-      - "frontend/**"
-      - "README.md"
+    paths:
+      - "backend/**"        # ✅ only backend changes
+      - "docker-compose.yml" # ✅ docker changes affect backend
+      - "Dockerfile"         # ✅ dockerfile changes affect backend
 
 jobs:
   deploy:
