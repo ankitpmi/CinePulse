@@ -3,7 +3,7 @@ name: Backend CI/CD
 on:
   push:
     branches:
-      - main                    # deploy only on main
+      - main
     paths:
       - "backend/**"
       - "docker-compose.yml"
@@ -11,7 +11,7 @@ on:
       - "package.json"
   pull_request:
     branches:
-      - main                    # just validate on PR, no deploy
+      - main
     paths:
       - "backend/**"
       - "docker-compose.yml"
@@ -23,23 +23,88 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Deploy Backend to EC2
-        if: github.event_name == 'push'       # 👈 deploy only on actual push to main, not PR
+        if: github.event_name == 'push'
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
+          script_stop: true                         # ✅ fail if any command fails
           script: |
             cd /home/ubuntu/CinePulse
 
             echo "Pulling latest code..."
             git pull origin main
 
-            echo "Rebuilding backend container only..."
-            docker compose up -d --build backend
+            echo "Rebuilding backend container..."
+            docker compose up -d --build backend || (
+              echo "❌ Build failed! Rolling back..."
+              docker compose up -d backend
+              exit 1
+            )
 
             echo "Cleaning unused docker images..."
             docker image prune -f
 
-            echo "Deployment completed successfully!"
+            echo "Waiting for backend to start..."
+            sleep 10
+
+            echo "Checking backend health..."
+            curl -f http://localhost:3000/api/health || exit 1
+
+            echo "✅ Backend deployed and healthy!"
+
+      # ── Changelog + Release (main push only) ─────────────────────
+      - name: Generate Changelog
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v5
+        with:
+          github-token: ${{ secrets.DEVOPS_GITHUB_TOKEN }}
+          output-file: "CHANGELOG.md"
+          version-file: "./package.json"
+          release-count: "0"
+          skip-commit: "false"
+          skip-on-empty: "true"
+          git-message: "chore(release): {version} [skip ci]"
+
+      - name: Create GitHub Release
+        if: |
+          github.ref == 'refs/heads/main' &&
+          github.event_name == 'push' &&
+          steps.changelog.outputs.skipped == 'false'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.changelog.outputs.tag }}
+          name: 🚀 CinePulse Backend Release ${{ steps.changelog.outputs.tag }}
+          body: |
+            🚀 New backend deployed successfully
+
+            🔹 Commit SHA: ${{ github.sha }}
+            🔹 Branch: ${{ github.ref_name }}
+            🔹 Triggered by: ${{ github.actor }}
+
+            ---
+
+            ## 📋 Changelog
+            ${{ steps.changelog.outputs.clean_changelog }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEVOPS_GITHUB_TOKEN }}
+
+      # ── Deployment Summary ────────────────────────────────────────
+      - name: Deployment Summary
+        if: always()
+        run: |
+          echo "### 🚀 Backend Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "| | |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+          echo "| **Branch** | ${{ github.ref_name }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Commit** | ${{ github.sha }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Triggered by** | ${{ github.actor }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Status** | ✅ Deployed |" >> $GITHUB_STEP_SUMMARY
