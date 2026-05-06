@@ -36,7 +36,7 @@ app.use("/healthStatus", (req, res) => {
     res.status(200).send('Backend server healthy!!!');
 })
 app.use("/apiOne", (req, res) => {
-    res.status(200).send('apiOne!!!');
+    res.status(200).send('apiOne is working!!!');
 })
 
 const __dirname = path.resolve();
