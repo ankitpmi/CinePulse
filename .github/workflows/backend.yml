@@ -88,6 +88,8 @@ jobs:
           skip-commit: "false"
           skip-on-empty: "true"
           git-message: "chore(release): {version} [skip ci]"
+          git-user-name: "ankitpmi"                                   # 👈 add this
+          git-user-email: "ankit.prajapati@mindinventory.com"             # 👈 add this
 
       - name: Create GitHub Release
         if: |
