@@ -7,7 +7,8 @@ export default defineConfig({
   server: {
     proxy: {
       // "/api/": "http://15.206.100.137",
-      "/uploads/": "http://15.206.157.58",
+      // "/uploads/": "http://15.206.157.58",
+      "/uploads/": "https://cinepulse.duckdns.org",
     },
   },
 });
