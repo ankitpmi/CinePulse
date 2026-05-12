@@ -1,3 +1,12 @@
+## [1.3.1](https://github.com/ankitpmi/CinePulse/compare/v1.3.0...v1.3.1) (2026-05-12)
+
+
+### Bug Fixes
+
+* **frontend:** update uploads proxy URL in Vite configuration ([5f2c90e](https://github.com/ankitpmi/CinePulse/commit/5f2c90e8932e65f00714245b17952389ea9e43f3))
+
+
+
 # [1.3.0](https://github.com/ankitpmi/CinePulse/compare/v1.2.1...v1.3.0) (2026-05-06)
 
 
