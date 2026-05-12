@@ -7,6 +7,7 @@ import {
   useAddMovieReviewMutation,
 } from "../../redux/api/movies";
 import MovieTabs from "./MovieTabs";
+import { IMAGE_URL } from "../../redux/constants";
 
 const MovieDetails = () => {
   const { id: movieId } = useParams();
@@ -45,7 +46,7 @@ const MovieDetails = () => {
         <div className="mt-10">
           <div className="flex justify-center items-center">
           <img
-            src={movie?.image}
+            src={`${IMAGE_URL}${movie?.image}`}
             alt={movie?.name}
             className="w-full max-w-3xl rounded-xl border border-app-border"
           />
