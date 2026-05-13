@@ -1,4 +1,9 @@
 /node_modules
 /.docker/
+
+
+.env
+.env.*
+!.env.example
 .env*
 frontend/node_modules
