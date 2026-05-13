@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-
+import {IMAGE_URL} from '../../redux/constants'
 const MovieCard = ({ movie }) => {
 
   return (
     <div key={movie._id} className="relative group m-[2rem] rounded-xl overflow-hidden">
       <Link to={`/movies/${movie._id}`}>
         <img
-          src={movie.image}
+          src={`${IMAGE_URL}${movie.image}`}
           alt={movie.name}
           className="w-[20rem] h-[20rem] m-0 p-0 transition duration-300 ease-in-out transform group-hover:scale-[1.02]"
         />

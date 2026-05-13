@@ -1,9 +1,11 @@
+import { IMAGE_URL } from "../../../../redux/constants";
+
 const VideoCard = ({ image, title, date, comments }) => {
   return (
     <>
       <div className="flex items-center w-[90%] mt-5">
         <div>
-          <img src={image} alt="Card Image" className="h-[3rem]" />
+          <img src={`${IMAGE_URL}${image}`} alt="Card Image" className="h-[3rem]" />
         </div>
 
         <div className="ml-4">
