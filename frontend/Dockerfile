@@ -4,6 +4,7 @@ WORKDIR /src
 COPY package*.json ./
 RUN npm ci
 COPY . .
+ENV VITE_API_URL=http://localhost
 RUN npm run build
 
 # ── Stage 2: Serve ──────────────────────────────────────
