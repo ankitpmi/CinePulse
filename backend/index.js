@@ -5,8 +5,7 @@ import dotenv from "dotenv";
 import path from "path";
 import cors from "cors";
 import client from 'prom-client';   
-import winston from 'winston';
-import LokiTransport from 'winston-loki';
+
 
 
 // Files
@@ -15,21 +14,12 @@ import userRoutes from "./routes/userRoutes.js";
 import genreRoutes from "./routes/genreRoutes.js";
 import moviesRoutes from "./routes/moviesRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
+import {logger} from './utils/logger.js'
 
 // Configuration
 dotenv.config();
 connectDB();
 
-
-export const logger = winston.createLogger({
-  transports: [
-    new LokiTransport({
-      host: "http://loki:3100",
-      labels: { app: 'api' },
-      json: true,
-    }),
-  ],
-});
 
 const app = express();
 

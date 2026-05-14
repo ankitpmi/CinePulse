@@ -1,11 +1,14 @@
 import Movie from "../models/Movie.js";
+import { logger } from "../utils/logger.js";
 
 const createMovie = async (req, res) => {
   try {
     const newMovie = new Movie(req.body);
     const savedMovie = await newMovie.save();
+    logger.info(`Movie created: ${savedMovie.title}`);
     res.json(savedMovie);
   } catch (error) {
+    logger.error(`Error creating movie: ${error.message}`);
     res.status(500).json({ error: error.message });
   }
 };
@@ -14,7 +17,9 @@ const getAllMovies = async (req, res) => {
   try {
     const movies = await Movie.find();
     res.json(movies);
+    logger.info(`All movies fetched`);
   } catch (error) {
+    logger.error(`Error getting all movies: ${error.message}`);
     res.status(500).json({ error: error.message });
   }
 };
@@ -27,8 +32,10 @@ const getSpecificMovie = async (req, res) => {
       return res.status(404).json({ message: "Movie not found" });
     }
 
+    logger.info(`Movie fetched: ${specificMovie.title}`);
     res.json(specificMovie);
   } catch (error) {
+    logger.error(`Error getting specific movie: ${error.message}`);
     res.status(500).json({ error: error.message });
   }
 };
@@ -44,8 +51,10 @@ const updateMovie = async (req, res) => {
       return res.status(404).json({ message: "Movie not found" });
     }
 
+    logger.info(`Movie updated: ${updatedMovie.title}`);
     res.json(updatedMovie);
   } catch (error) {
+    logger.error(`Error updating movie: ${error.message}`);
     res.status(500).json({ error: error.message });
   }
 };
@@ -79,13 +88,14 @@ const movieReview = async (req, res) => {
         movie.reviews.length;
 
       await movie.save();
+      logger.info(`Review added to movie: ${movie.title}`);
       res.status(201).json({ message: "Review Added" });
     } else {
       res.status(404);
       throw new Error("Movie not found");
     }
   } catch (error) {
-    console.error(error);
+    logger.error(`Error adding movie review: ${error.message}`);
     res.status(400).json(error.message);
   }
 };
@@ -99,8 +109,10 @@ const deleteMovie = async (req, res) => {
       return res.status(404).json({ message: "Movie not found" });
     }
 
+    logger.info(`Movie deleted: ${deleteMovie.title}`);
     res.json({ message: "Movie Deleted Successfully" });
   } catch (error) {
+    logger.error(`Error deleting movie: ${error.message}`);
     res.status(500).json({ error: error.message });
   }
 };
@@ -131,9 +143,10 @@ const deleteComment = async (req, res) => {
         : 0;
 
     await movie.save();
+    logger.info(`Comment deleted from movie: ${movie.title}`);
     res.json({ message: "Comment Deleted Successfully" });
   } catch (error) {
-    console.error(error);
+    logger.error(`Error deleting comment: ${error.message}`);
     res.status(500).json({ error: error.message });
   }
 };
@@ -142,7 +155,9 @@ const getNewMovies = async (req, res) => {
   try {
     const newMovies = await Movie.find().sort({ createdAt: -1 }).limit(10);
     res.json(newMovies);
+    logger.info(`New movies fetched`);
   } catch (error) {
+    logger.error(`Error fetching new movies: ${error.message}`);
     res.status(500).json({ error: error.message });
   }
 };
@@ -153,7 +168,9 @@ const getTopMovies = async (req, res) => {
       .sort({ numReviews: -1 })
       .limit(10);
     res.json(topRatedMovies);
+    logger.info(`Top movies fetched`);
   } catch (error) {
+    logger.error(`Error fetching top movies: ${error.message}`);
     res.status(500).json({ error: error.message });
   }
 };
@@ -162,7 +179,9 @@ const getRandomMovies = async (req, res) => {
   try {
     const randomMovies = await Movie.aggregate([{ $sample: { size: 10 } }]);
     res.json(randomMovies);
+    logger.info(`Random movies fetched`);
   } catch (error) {
+    logger.error(`Error fetching random movies: ${error.message}`);
     res.status(500).json({ error: error.message });
   }
 };
