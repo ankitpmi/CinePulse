@@ -5,6 +5,8 @@ import dotenv from "dotenv";
 import path from "path";
 import cors from "cors";
 import client from 'prom-client';   
+import winston from 'winston';
+import LokiTransport from 'winston-loki';
 
 
 // Files
@@ -17,6 +19,17 @@ import uploadRoutes from "./routes/uploadRoutes.js";
 // Configuration
 dotenv.config();
 connectDB();
+
+
+export const logger = winston.createLogger({
+  transports: [
+    new LokiTransport({
+      host: "http://loki:3100",
+      labels: { app: 'api' },
+      json: true,
+    }),
+  ],
+});
 
 const app = express();
 
@@ -46,13 +59,16 @@ app.get("/metrics", async (req, res) => {
 })
 
 app.get("/healthStatus", (req, res) => {
+    logger.info('Health check requested');
     res.status(200).send('Backend server healthy!!!');
 })
 app.get("/apiOne", (req, res) => {
+    logger.info('API One endpoint called');
     res.status(200).send('apiOne is working!!!');
 })
 
 app.get("/", (req, res) => {
+    logger.info('Root endpoint called');
     res.status(200).send('Backend server is running!!!');
 })
 
