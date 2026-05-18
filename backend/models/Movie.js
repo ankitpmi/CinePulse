@@ -30,5 +30,8 @@ const movieSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+movieSchema.index({ rating: -1 });
+
+
 const Movie = mongoose.model("Movie", movieSchema);
 export default Movie;

@@ -7,7 +7,8 @@ export const logger = winston.createLogger({
     new LokiTransport({
       host: "http://loki:3100",
       labels: { app: 'api' },
-      json: true,
+      json: false,   // ← change to false
+      format: winston.format.simple()
     }),
   ],
 });

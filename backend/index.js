@@ -15,6 +15,7 @@ import genreRoutes from "./routes/genreRoutes.js";
 import moviesRoutes from "./routes/moviesRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import {logger} from './utils/logger.js'
+import { log } from "console";
 
 // Configuration
 dotenv.config();
@@ -52,10 +53,50 @@ app.get("/healthStatus", (req, res) => {
     logger.info('Health check requested');
     res.status(200).send('Backend server healthy!!!');
 })
-app.get("/apiOne", (req, res) => {
-    logger.info('API One endpoint called');
-    res.status(200).send('apiOne is working!!!');
-})
+// app.get("/apiOne", (req, res) => {
+//     logger.info('API One endpoint called');
+//     // res.status(200).send('apiOne is working!!!');
+//     res.status(500).send({
+//         success: false,
+//         message: 'Something went wrong in apiOne'
+//     });
+// })
+
+app.get("/apiOne", async (req, res) => {
+    try {
+        logger.info("API One endpoint called");
+
+        // Random success/failure
+        const isSuccess = Math.random() < 0.2; // 20% success, 80% failure
+
+        if (!isSuccess) {
+            logger.error("API One failed randomly");
+            throw new Error("API One failed randomly");
+        }
+
+        // Success response
+        logger.info("API One success");
+
+        res.status(200).json({
+            success: true,
+            message: "apiOne is working!!!"
+        });
+
+    } catch (error) {
+
+        // Error log
+        logger.error({
+            message: error.message,
+            stack: error.stack
+        });
+
+        // Error response
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error"
+        });
+    }
+});
 
 app.get("/", (req, res) => {
     logger.info('Root endpoint called');
