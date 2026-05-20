@@ -4,4 +4,5 @@ global:
 scrape_configs:
   - job_name: prometheus
     static_configs:
-      - targets: ["192.168.1.152"]
+      # - targets: ["192.168.1.152"] 
+      - targets: ["http://prometheus:9090"] 
