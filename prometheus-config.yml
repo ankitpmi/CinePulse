@@ -6,3 +6,7 @@ scrape_configs:
     static_configs:
       # - targets: ["192.168.1.152"] 
       - targets: ["http://prometheus:9090"] 
+      
+  - job_name: nodejs-backend
+    static_configs:
+      - targets: ["backend:3000"]
