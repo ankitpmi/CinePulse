@@ -1,3 +1,27 @@
+# [1.4.0](https://github.com/ankitpmi/CinePulse/compare/v1.3.1...v1.4.0) (2026-05-26)
+
+
+### Bug Fixes
+
+* **backend:** removed commented code for nginx config ([87c7b6e](https://github.com/ankitpmi/CinePulse/commit/87c7b6e4f0b2179fb2e1221e897dec1077a8569c))
+* **backend:** reverted changes for prometheus config ([be095ac](https://github.com/ankitpmi/CinePulse/commit/be095ac10d446a74f0e049518ddbff97f9858bae))
+
+
+### Features
+
+* **api:** enhance API One with error handling and random success and failure logic ([86113e4](https://github.com/ankitpmi/CinePulse/commit/86113e498f7a7c89668918be8e0cf5ff05f38bb5))
+* **backend:** created nginx and docker compose for producion ([6cddb79](https://github.com/ankitpmi/CinePulse/commit/6cddb79131a2446ae57b3f2a2868bc4c02fac5c0))
+* **backend:** make changes for prometheus config ([e678447](https://github.com/ankitpmi/CinePulse/commit/e6784475707f8a98e1b4abbdbbd71a7f093c2c88))
+* **frontend:** update image source handling by introducing IMAGE_URL constant ([cd85a40](https://github.com/ankitpmi/CinePulse/commit/cd85a402485a1060736c03f6030de5f8ca94dd06))
+* **logging:** implement centralized logging with Winston and Loki ([4136b79](https://github.com/ankitpmi/CinePulse/commit/4136b79486f3972ebde9bd89477f7e77f54c0b2d))
+* **monitoring:** integrate Prometheus for metrics collection and add health check endpoint ([8a2aefb](https://github.com/ankitpmi/CinePulse/commit/8a2aefb21ba172f62f2233d69ecfde0fbd9a50b4))
+* **nginx:** update Grafana proxy settings and add HTTP resolver ([f1c5802](https://github.com/ankitpmi/CinePulse/commit/f1c5802cb4bf62fe9cf0aa9ebdb8ddcecafc7428))
+* **prometheus:** add nodejs-backend target to scrape configurations ([c33fd13](https://github.com/ankitpmi/CinePulse/commit/c33fd13f956b0cb2b064c5b79ba9b400a67035a8))
+* **prometheus:** update job name and target for nodejs backend ([c40dac8](https://github.com/ankitpmi/CinePulse/commit/c40dac86ff795cb96468a8ba0cef9f5afa5fedf8))
+* **prometheus:** update scrape target to new IP address ([184588e](https://github.com/ankitpmi/CinePulse/commit/184588ef333063a6c28f4c05b8081b3dbb3451e5))
+
+
+
 ## [1.3.1](https://github.com/ankitpmi/CinePulse/compare/v1.3.0...v1.3.1) (2026-05-12)
 
 

@@ -8,16 +8,18 @@ on:
       - main
     paths:
       - "backend/**"
-      - "docker-compose.yml"
+      - "docker-compose.prod.yml"
       - "Dockerfile"
+      - "nginx.prod.conf"
       - "package.json"
   pull_request:
     branches:
       - main
     paths:
       - "backend/**"
-      - "docker-compose.yml"
+      - "docker-compose.prod.yml"
       - "Dockerfile"
+      - "nginx.prod.conf"
       - "package.json"
 
 jobs:
@@ -48,10 +50,27 @@ jobs:
             PREVIOUS_COMMIT=$(git rev-parse HEAD~1)
             echo "Previous commit: $PREVIOUS_COMMIT"
 
+            # ── Grafana basic auth setup ──────────────────────────
+            echo "Setting up Grafana basic auth..."
+            mkdir -p ./monitoring
+            sudo rm -rf ./monitoring/.htpasswd
+            htpasswd -cb ./monitoring/.htpasswd \
+              ${{ secrets.GRAFANA_BASIC_AUTH_USER }} \
+              ${{ secrets.GRAFANA_BASIC_AUTH_PASSWORD }}
+
+            # Verify file was created correctly
+            if [ ! -f ./monitoring/.htpasswd ]; then
+              echo "❌ .htpasswd file creation failed!"
+              exit 1
+            fi
+            echo "✅ .htpasswd created successfully"
+            # ─────────────────────────────────────────────────────
+
             echo "Rebuilding backend container..."
-            docker compose up -d --build backend || (
+            docker compose -f docker-compose.prod.yml up -d --build || (
               echo "❌ Build failed! Rolling back..."
-              docker compose up -d backend
+              git checkout $PREVIOUS_COMMIT -- backend/ package.json
+              docker compose -f docker-compose.prod.yml up -d
               exit 1
             )
 
@@ -75,12 +94,32 @@ jobs:
             if [ "$HEALTH_PASSED" = false ]; then
               echo "❌ Health check failed! Rolling back..."
               git checkout $PREVIOUS_COMMIT -- backend/ package.json
-              docker compose up -d --build backend
+              docker compose -f docker-compose.prod.yml up -d
               echo "⚠️ Rolled back to previous version!"
               exit 1
             fi
 
             echo "✅ Backend deployed and healthy!"
+
+            # ── Grafana health check ──────────────────────────────
+            echo "Checking Grafana health..."
+            GRAFANA_PASSED=false
+            for i in 1 2 3 4 5; do
+              if docker exec grafana curl -f http://localhost:3000/api/health; then
+                GRAFANA_PASSED=true
+                break
+              fi
+              echo "Grafana attempt $i failed, retrying in 5s..."
+              sleep 5
+            done
+
+            if [ "$GRAFANA_PASSED" = false ]; then
+              echo "⚠️ Grafana health check failed — check logs"
+              docker logs grafana --tail 20
+            else
+              echo "✅ Grafana is healthy!"
+            fi
+            # ─────────────────────────────────────────────────────
 
       - name: Configure Git
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
@@ -139,3 +178,4 @@ jobs:
           echo "| **Commit** | ${{ github.sha }} |" >> $GITHUB_STEP_SUMMARY
           echo "| **Triggered by** | ${{ github.actor }} |" >> $GITHUB_STEP_SUMMARY
           echo "| **Status** | ✅ Deployed |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Grafana** | https://cinepulse.duckdns.org/grafana/ |" >> $GITHUB_STEP_SUMMARY
