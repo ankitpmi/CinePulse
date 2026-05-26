@@ -16,6 +16,21 @@ services:
   #     timeout: 5s
   #     retries: 5
 
+  redis:
+    image: redis:7-alpine
+    container_name: cine-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"       # exposed locally for redis-cli debugging
+    volumes:
+      - redis_data:/data
+    networks:
+      - cine-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   backend:
     build:
@@ -28,6 +43,9 @@ services:
       - .env.docker
     volumes:
       - ./uploads:/app/uploads
+    depends_on:
+      redis:
+        condition: service_healthy
     networks:
       - cine-network
 
@@ -61,18 +79,17 @@ services:
     image: prom/prometheus
     container_name: prometheus
     ports:
-      - "9090:9090"       # exposed locally for direct access/debugging
+      - "9090:9090"
     volumes:
       - ./prometheus-config.yml:/etc/prometheus/prometheus.yml
     networks:
       - cine-network
 
-
   loki:
     image: grafana/loki
     container_name: loki
     ports:
-      - "3100:3100"       # exposed locally for debugging
+      - "3100:3100"
     networks:
       - cine-network
 
@@ -80,7 +97,7 @@ services:
     image: grafana/grafana-oss
     container_name: grafana
     ports:
-      - "3001:3000"        # access directly at localhost:3001
+      - "3001:3000"
     volumes:
       - grafana_data:/var/lib/grafana
     networks:
@@ -92,4 +109,5 @@ networks:
 
 volumes:
   mongo_data:
-  grafana_data: 
+  grafana_data:
+  redis_data:      # added

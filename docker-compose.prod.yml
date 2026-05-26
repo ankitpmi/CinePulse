@@ -1,4 +1,21 @@
 services:
+
+  redis:
+    image: redis:7-alpine
+    container_name: cine-redis
+    restart: unless-stopped
+    expose:
+      - "6379"            # internal only, not reachable from internet
+    volumes:
+      - redis_data:/data
+    networks:
+      - cine-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   backend:
     build:
       context: ./
@@ -10,6 +27,9 @@ services:
       - .env.docker
     volumes:
       - ./uploads:/app/uploads
+    depends_on:
+      redis:
+        condition: service_healthy
     networks:
       - cine-network
 
@@ -35,7 +55,7 @@ services:
     image: prom/prometheus
     container_name: prometheus
     expose:
-      - "9090"            # internal only, not reachable from internet
+      - "9090"
     volumes:
       - ./prometheus-config.yml:/etc/prometheus/prometheus.yml
     networks:
@@ -45,7 +65,7 @@ services:
     image: grafana/loki
     container_name: loki
     expose:
-      - "3100"            # internal only
+      - "3100"
     networks:
       - cine-network
 
@@ -53,7 +73,7 @@ services:
     image: grafana/grafana-oss
     container_name: grafana
     expose:
-      - "3000"            # internal only, accessed via Nginx at /grafana/
+      - "3000"
     environment:
       - GF_SERVER_ROOT_URL=https://cinepulse.duckdns.org/grafana/
       - GF_SERVER_SERVE_FROM_SUB_PATH=true
@@ -72,3 +92,4 @@ networks:
 volumes:
   mongo_data:
   grafana_data:
+  redis_data:      # added

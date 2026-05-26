@@ -1,5 +1,7 @@
 import Movie from "../models/Movie.js";
 import { logger } from "../utils/logger.js";
+import redisClient from "../config/redis.js";
+import CACHE_KEYS, { TTL } from "../utils/cacheKeys.js";
 
 const createMovie = async (req, res) => {
   try {
@@ -13,9 +15,32 @@ const createMovie = async (req, res) => {
   }
 };
 
+// const getAllMovies = async (req, res) => {
+//   try {
+//     const movies = await Movie.find();
+//     res.json(movies);
+//     logger.info(`All movies fetched`);
+//   } catch (error) {
+//     logger.error(`Error getting all movies: ${error.message}`);
+//     res.status(500).json({ error: error.message });
+//   }
+// };
+
 const getAllMovies = async (req, res) => {
   try {
+    // Check cache first
+    const cached = await redisClient.get(CACHE_KEYS.ALL_MOVIES);
+    if (cached) {
+      logger.info(`All movies fetched from cache`);
+      console.log(`All movies fetched from cache`);
+      return res.json(JSON.parse(cached));
+    }
+
     const movies = await Movie.find();
+
+    // Store in cache
+    await redisClient.setEx(CACHE_KEYS.ALL_MOVIES, TTL.MOVIES, JSON.stringify(movies));
+
     res.json(movies);
     logger.info(`All movies fetched`);
   } catch (error) {
@@ -154,6 +179,7 @@ const deleteComment = async (req, res) => {
 const getNewMovies = async (req, res) => {
   try {
     const newMovies = await Movie.find().sort({ createdAt: -1 }).limit(10);
+    
     res.json(newMovies);
     logger.info(`New movies fetched`);
   } catch (error) {
