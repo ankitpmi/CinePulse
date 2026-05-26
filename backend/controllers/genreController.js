@@ -1,5 +1,7 @@
 import Genre from "../models/Genre.js";
 import asyncHandler from "../middlewares/asyncHandler.js";
+import {logger} from '../utils/logger.js'
+
 
 const createGenre = asyncHandler(async (req, res) => {
   try {
@@ -16,9 +18,10 @@ const createGenre = asyncHandler(async (req, res) => {
     }
 
     const genre = await new Genre({ name }).save();
+    logger.info(`Genre created: ${genre.name}`);
     res.json(genre);
   } catch (error) {
-    console.log(error);
+    logger.error(`Error creating genre: ${error.message}`);
     return res.status(400).json(error);
   }
 });
@@ -38,8 +41,9 @@ const updateGenre = asyncHandler(async (req, res) => {
 
     const updatedGenre = await genre.save();
     res.json(updatedGenre);
+    logger.info(`Genre updated: ${updatedGenre.name}`);
   } catch (error) {
-    console.error(error);
+    logger.error(`Error updating genre: ${error.message}`);
     res.status(500).json({ error: "Internal server error" });
   }
 });
@@ -53,10 +57,11 @@ const removeGenre = asyncHandler(async (req, res) => {
       return res.status(404).json({ error: "Genre not found" });
     }
 
+    logger.info(`Genre removed: ${removed.name}`);
     res.json(removed);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Interval server error" });
+    logger.error(`Error removing genre: ${error.message}`);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -65,7 +70,7 @@ const listGenres = asyncHandler(async (req, res) => {
     const all = await Genre.find({});
     res.json(all);
   } catch (error) {
-    console.log(error);
+    logger.error(`Error listing genres: ${error.message}`);
     return res.status(400).json(error.message);
   }
 });
@@ -74,8 +79,9 @@ const readGenre = asyncHandler(async (req, res) => {
   try {
     const genre = await Genre.findOne({ _id: req.params.id });
     res.json(genre);
+    logger.info(`Genre read`);
   } catch (error) {
-    console.log(error);
+    logger.error(`Error reading genre: ${error.message}`);
     return res.status(400).json(error.message);
   }
 });

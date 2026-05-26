@@ -1,22 +1,4 @@
 services:
-
-  # mongo:
-  #   image: mongo:6
-  #   container_name: cine-mongo
-  #   restart: unless-stopped
-  #   ports:
-  #     - "27017:27017"
-  #   volumes:
-  #     - mongo_data:/data/db
-  #   networks:
-  #     - cine-network
-  #   healthcheck:
-  #     test: ["CMD", "mongosh", "--eval", "db.runCommand({ ping: 1 })"]
-  #     interval: 10s
-  #     timeout: 5s
-  #     retries: 5
-
-
   backend:
     build:
       context: ./
@@ -36,8 +18,12 @@ services:
     container_name: cine-nginx
     ports:
       - "80:80"
+      - "443:443"
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx.prod.conf:/etc/nginx/nginx.conf:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - ./monitoring/.htpasswd:/etc/nginx/.htpasswd:ro
+      - /var/www/certbot:/var/www/certbot:ro
     depends_on:
       - backend
       - grafana
@@ -45,42 +31,35 @@ services:
     networks:
       - cine-network
 
-  frontend:
-    build:
-      context: ./frontend
-    container_name: cine-frontend
-    restart: unless-stopped
-    ports:
-      - "5173:80"
-    depends_on:
-      - backend
-    networks:
-      - cine-network
-
   prom-server:
     image: prom/prometheus
     container_name: prometheus
-    ports:
-      - "9090:9090"       # exposed locally for direct access/debugging
+    expose:
+      - "9090"            # internal only, not reachable from internet
     volumes:
       - ./prometheus-config.yml:/etc/prometheus/prometheus.yml
     networks:
       - cine-network
 
-
   loki:
     image: grafana/loki
     container_name: loki
-    ports:
-      - "3100:3100"       # exposed locally for debugging
+    expose:
+      - "3100"            # internal only
     networks:
       - cine-network
 
   grafana:
     image: grafana/grafana-oss
     container_name: grafana
-    ports:
-      - "3001:3000"        # access directly at localhost:3001
+    expose:
+      - "3000"            # internal only, accessed via Nginx at /grafana/
+    environment:
+      - GF_SERVER_ROOT_URL=https://cinepulse.duckdns.org/grafana/
+      - GF_SERVER_SERVE_FROM_SUB_PATH=true
+      - GF_SERVER_DOMAIN=cinepulse.duckdns.org
+      - GF_SERVER_PROTOCOL=http
+      - GF_SERVER_ENFORCE_DOMAIN=false
     volumes:
       - grafana_data:/var/lib/grafana
     networks:
@@ -92,4 +71,4 @@ networks:
 
 volumes:
   mongo_data:
-  grafana_data: 
+  grafana_data:
