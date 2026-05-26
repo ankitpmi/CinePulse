@@ -6,7 +6,7 @@ const CACHE_KEYS = {
 };
 
 export const TTL = {
-  MOVIES: 60 * 10,      // 10 minutes
+  MOVIES: 60 * 60 * 24, // 24 hours
   GENRES: 60 * 30,      // 30 minutes
   TOKEN: 60 * 60 * 24,  // 24 hours
 };

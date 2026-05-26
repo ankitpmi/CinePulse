@@ -32,6 +32,7 @@ const getAllMovies = async (req, res) => {
     const cached = await redisClient.get(CACHE_KEYS.ALL_MOVIES);
     if (cached) {
       logger.info(`All movies fetched from cache`);
+      console.log(`All movies fetched from cache`);
       return res.json(JSON.parse(cached));
     }
 
