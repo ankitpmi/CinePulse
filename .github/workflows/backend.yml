@@ -101,25 +101,6 @@ jobs:
 
             echo "✅ Backend deployed and healthy!"
 
-
-            echo "Checking Grafana health..."
-            GRAFANA_PASSED=false
-            for i in 1 2 3 4 5; do
-              if docker exec grafana curl -f http://localhost:3000/healthStatus; then 
-                GRAFANA_PASSED=true
-                break
-              fi
-              echo "Grafana attempt $i failed, retrying in 5s..."
-              sleep 5
-            done
-
-            if [ "$GRAFANA_PASSED" = false ]; then
-              echo "⚠️ Grafana health check failed — check logs"
-              docker logs grafana --tail 20
-            else
-              echo "✅ Grafana is healthy!"
-            fi
-
       - name: Configure Git
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
