@@ -1,6 +1,8 @@
 import Genre from "../models/Genre.js";
 import asyncHandler from "../middlewares/asyncHandler.js";
 import {logger} from '../utils/logger.js'
+import redisClient from "../config/redis.js";
+import CACHE_KEYS, { TTL } from "../utils/cacheKeys.js";
 
 
 const createGenre = asyncHandler(async (req, res) => {
@@ -65,9 +67,42 @@ const removeGenre = asyncHandler(async (req, res) => {
   }
 });
 
+// const listGenres = asyncHandler(async (req, res) => {
+//   try {
+//     const all = await Genre.find({});
+//     res.json(all);
+//   } catch (error) {
+//     logger.error(`Error listing genres: ${error.message}`);
+//     return res.status(400).json(error.message);
+//   }
+// });
+
+
+// ==============================
+// List Genres
+// ==============================
 const listGenres = asyncHandler(async (req, res) => {
   try {
+    const cacheKey = "genres";
+
+    // Check Redis Cache
+    const cachedGenres = await redisClient.get(cacheKey);
+
+    if (cachedGenres) {
+      logger.info(`Genres fetched from Redis cache`);
+      return res.json(JSON.parse(cachedGenres));
+    }
+
+    // Fetch From DB
     const all = await Genre.find({});
+
+    // Store in Redis
+    await redisClient.set(cacheKey, JSON.stringify(all), {
+      EX: 3600,
+    });
+
+    logger.info(`Genres fetched from DB`);
+
     res.json(all);
   } catch (error) {
     logger.error(`Error listing genres: ${error.message}`);
