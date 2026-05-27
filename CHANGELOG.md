@@ -1,3 +1,25 @@
+# [1.5.0](https://github.com/ankitpmi/CinePulse/compare/v1.4.0...v1.5.0) (2026-05-27)
+
+
+### Bug Fixes
+
+* **deployment:** update docker compose commands for production environment ([2d6aa75](https://github.com/ankitpmi/CinePulse/commit/2d6aa758d3a17ae9b26b6ac62a12e4a65f4f2876))
+* **Grafana:** update health check endpoint to /healthStatus ([9b72e03](https://github.com/ankitpmi/CinePulse/commit/9b72e033620ff33a5106a9b49a9ab838bb30f312))
+* **Grafana:** use sudo for htpasswd command in backend CI/CD workflow ([050f61f](https://github.com/ankitpmi/CinePulse/commit/050f61fe093b78ae0ff84e7405ec504e4ad60851))
+
+
+### Features
+
+* **cache:** implement Redis caching for movie data retrieval ([3cc19ac](https://github.com/ankitpmi/CinePulse/commit/3cc19aceb943b7f9b666941bcc05a9d5ff52ce8b))
+* **cache:** update cache TTL for movies to 24 hours and log cache retrieval ([57cd599](https://github.com/ankitpmi/CinePulse/commit/57cd599cd85fac9e8371251663d3f03e1ea83ed9))
+* **deployment:** enhance Grafana setup and health checks in CI/CD workflow ([7c732b2](https://github.com/ankitpmi/CinePulse/commit/7c732b22f47ab2e764a2cda4689511663314b75d))
+* **redis:** add Redis service with healthcheck and update backend dependencies ([b17dcc4](https://github.com/ankitpmi/CinePulse/commit/b17dcc4aa9ae245c89b28b5daba42d27cd3e6ed6))
+* **redis:** implement caching for genre list using Redis ([f0de5ab](https://github.com/ankitpmi/CinePulse/commit/f0de5ab5c461fdfc3d842af61e2df959474af928))
+* **redis:** implement caching for new, top, and random movies using Redis ([b802a3c](https://github.com/ankitpmi/CinePulse/commit/b802a3c16a54ab1fb3ea24ad9a8d91fbd0581e3e))
+* **redis:** update Redis caching implementation for genres and movies ([6644aad](https://github.com/ankitpmi/CinePulse/commit/6644aadfbe818ff3c8bb3d2bfe305605c10387d7))
+
+
+
 # [1.4.0](https://github.com/ankitpmi/CinePulse/compare/v1.3.1...v1.4.0) (2026-05-26)
 
 
