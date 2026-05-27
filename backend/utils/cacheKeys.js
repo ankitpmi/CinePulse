@@ -3,6 +3,10 @@ const CACHE_KEYS = {
   MOVIE: (id) => `movies:${id}`,
   ALL_GENRES: "genres:all",
   TOKEN_BLACKLIST: (token) => `blacklist:${token}`,
+  NEW_MOVIES: "movies:new",
+  TOP_MOVIES: "movies:top",
+  RANDOM_MOVIES: "movies:random",
+  
 };
 
 export const TTL = {
