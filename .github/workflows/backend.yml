@@ -54,7 +54,7 @@ jobs:
             echo "Setting up Grafana basic auth..."
             mkdir -p ./monitoring
             sudo rm -rf ./monitoring/.htpasswd
-            htpasswd -cb ./monitoring/.htpasswd \
+            sudo htpasswd -cb ./monitoring/.htpasswd \
               ${{ secrets.GRAFANA_BASIC_AUTH_USER }} \
               ${{ secrets.GRAFANA_BASIC_AUTH_PASSWORD }}
 
