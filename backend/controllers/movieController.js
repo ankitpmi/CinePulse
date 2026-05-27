@@ -209,10 +209,8 @@ const getNewMovies = async (req, res) => {
       .sort({ createdAt: -1 })
       .limit(10);
 
-    // Store in Redis
-    await redisClient.set(cacheKey, JSON.stringify(newMovies), {
-      EX: 3600,
-    });
+    await redisClient.setEx(CACHE_KEYS.NEW_MOVIES, TTL.MOVIES, JSON.stringify(newMovies));
+
 
     logger.info(`New movies fetched from DB`);
 
@@ -249,6 +247,7 @@ const getTopMovies = async (req, res) => {
 
     if (cachedMovies) {
       logger.info(`Top movies fetched from Redis cache`);
+      console.log(`Top movies fetched from Redis cache`);
       return res.json(JSON.parse(cachedMovies));
     }
 
@@ -258,9 +257,7 @@ const getTopMovies = async (req, res) => {
       .limit(10);
 
     // Store in Redis
-    await redisClient.set(cacheKey, JSON.stringify(topRatedMovies), {
-      EX: 3600,
-    });
+    await redisClient.setEx(CACHE_KEYS.TOP_MOVIES, TTL.MOVIES, JSON.stringify(topRatedMovies));
 
     logger.info(`Top movies fetched from DB`);
 
@@ -294,6 +291,7 @@ const getRandomMovies = async (req, res) => {
 
     if (cachedMovies) {
       logger.info(`Random movies fetched from Redis cache`);
+      console.log(`Random movies fetched from Redis cache`);
       return res.json(JSON.parse(cachedMovies));
     }
 
@@ -302,10 +300,9 @@ const getRandomMovies = async (req, res) => {
       { $sample: { size: 10 } },
     ]);
 
-    // Store in Redis
-    await redisClient.set(cacheKey, JSON.stringify(randomMovies), {
-      EX: 300, // keep low because random data should refresh quickly
-    });
+
+    await redisClient.setEx(CACHE_KEYS.RANDOM_MOVIES, TTL.MOVIES, JSON.stringify(randomMovies));
+
 
     logger.info(`Random movies fetched from DB`);
 

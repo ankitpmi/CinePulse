@@ -97,9 +97,7 @@ const listGenres = asyncHandler(async (req, res) => {
     const all = await Genre.find({});
 
     // Store in Redis
-    await redisClient.set(cacheKey, JSON.stringify(all), {
-      EX: 3600,
-    });
+    await redisClient.setEx(CACHE_KEYS.ALL_GENRES, TTL.GENRES, JSON.stringify(all));
 
     logger.info(`Genres fetched from DB`);
 
