@@ -83,10 +83,9 @@ const removeGenre = asyncHandler(async (req, res) => {
 // ==============================
 const listGenres = asyncHandler(async (req, res) => {
   try {
-    const cacheKey = "genres";
 
     // Check Redis Cache
-    const cachedGenres = await redisClient.get(cacheKey);
+    const cachedGenres = await redisClient.get(CACHE_KEYS.ALL_GENRES);
 
     if (cachedGenres) {
       logger.info(`Genres fetched from Redis cache`);

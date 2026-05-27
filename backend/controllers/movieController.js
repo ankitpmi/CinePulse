@@ -194,13 +194,17 @@ const deleteComment = async (req, res) => {
 // ==============================
 const getNewMovies = async (req, res) => {
   try {
-    const cacheKey = "newMovies";
+
 
     // Check Redis Cache
-    const cachedMovies = await redisClient.get(cacheKey);
+    const cachedMovies = await redisClient.get(CACHE_KEYS.NEW_MOVIES);
 
+
+
+    
     if (cachedMovies) {
       logger.info(`New movies fetched from Redis cache`);
+      console.log(`New movies fetched from Redis cache`);
       return res.json(JSON.parse(cachedMovies));
     }
 
@@ -240,10 +244,8 @@ const getNewMovies = async (req, res) => {
 // ==============================
 const getTopMovies = async (req, res) => {
   try {
-    const cacheKey = "topMovies";
-
     // Check Redis Cache
-    const cachedMovies = await redisClient.get(cacheKey);
+    const cachedMovies = await redisClient.get(CACHE_KEYS.TOP_MOVIES);
 
     if (cachedMovies) {
       logger.info(`Top movies fetched from Redis cache`);
@@ -284,10 +286,9 @@ const getTopMovies = async (req, res) => {
 // ==============================
 const getRandomMovies = async (req, res) => {
   try {
-    const cacheKey = "randomMovies";
 
     // Check Redis Cache
-    const cachedMovies = await redisClient.get(cacheKey);
+    const cachedMovies = await redisClient.get(CACHE_KEYS.RANDOM_MOVIES);
 
     if (cachedMovies) {
       logger.info(`Random movies fetched from Redis cache`);
