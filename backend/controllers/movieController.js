@@ -176,41 +176,146 @@ const deleteComment = async (req, res) => {
   }
 };
 
+// const getNewMovies = async (req, res) => {
+//   try {
+//     const newMovies = await Movie.find().sort({ createdAt: -1 }).limit(10);
+    
+//     res.json(newMovies);
+//     logger.info(`New movies fetched`);
+//   } catch (error) {
+//     logger.error(`Error fetching new movies: ${error.message}`);
+//     res.status(500).json({ error: error.message });
+//   }
+// };
+
+
+// ==============================
+// Get New Movies
+// ==============================
 const getNewMovies = async (req, res) => {
   try {
-    const newMovies = await Movie.find().sort({ createdAt: -1 }).limit(10);
-    
+    const cacheKey = "newMovies";
+
+    // Check Redis Cache
+    const cachedMovies = await redisClient.get(cacheKey);
+
+    if (cachedMovies) {
+      logger.info(`New movies fetched from Redis cache`);
+      return res.json(JSON.parse(cachedMovies));
+    }
+
+    // Fetch From DB
+    const newMovies = await Movie.find()
+      .sort({ createdAt: -1 })
+      .limit(10);
+
+    // Store in Redis
+    await redisClient.set(cacheKey, JSON.stringify(newMovies), {
+      EX: 3600,
+    });
+
+    logger.info(`New movies fetched from DB`);
+
     res.json(newMovies);
-    logger.info(`New movies fetched`);
   } catch (error) {
     logger.error(`Error fetching new movies: ${error.message}`);
     res.status(500).json({ error: error.message });
   }
 };
 
+// const getTopMovies = async (req, res) => {
+//   try {
+//     const topRatedMovies = await Movie.find()
+//       .sort({ numReviews: -1 })
+//       .limit(10);
+//     res.json(topRatedMovies);
+//     logger.info(`Top movies fetched`);
+//   } catch (error) {
+//     logger.error(`Error fetching top movies: ${error.message}`);
+//     res.status(500).json({ error: error.message });
+//   }
+// };
+
+
+// ==============================
+// Get Top Movies
+// ==============================
 const getTopMovies = async (req, res) => {
   try {
+    const cacheKey = "topMovies";
+
+    // Check Redis Cache
+    const cachedMovies = await redisClient.get(cacheKey);
+
+    if (cachedMovies) {
+      logger.info(`Top movies fetched from Redis cache`);
+      return res.json(JSON.parse(cachedMovies));
+    }
+
+    // Fetch From DB
     const topRatedMovies = await Movie.find()
       .sort({ numReviews: -1 })
       .limit(10);
+
+    // Store in Redis
+    await redisClient.set(cacheKey, JSON.stringify(topRatedMovies), {
+      EX: 3600,
+    });
+
+    logger.info(`Top movies fetched from DB`);
+
     res.json(topRatedMovies);
-    logger.info(`Top movies fetched`);
   } catch (error) {
     logger.error(`Error fetching top movies: ${error.message}`);
     res.status(500).json({ error: error.message });
   }
 };
 
+// const getRandomMovies = async (req, res) => {
+//   try {
+//     const randomMovies = await Movie.aggregate([{ $sample: { size: 10 } }]);
+//     res.json(randomMovies);
+//     logger.info(`Random movies fetched`);
+//   } catch (error) {
+//     logger.error(`Error fetching random movies: ${error.message}`);
+//     res.status(500).json({ error: error.message });
+//   }
+// };
+
+// ==============================
+// Get Random Movies
+// ==============================
 const getRandomMovies = async (req, res) => {
   try {
-    const randomMovies = await Movie.aggregate([{ $sample: { size: 10 } }]);
+    const cacheKey = "randomMovies";
+
+    // Check Redis Cache
+    const cachedMovies = await redisClient.get(cacheKey);
+
+    if (cachedMovies) {
+      logger.info(`Random movies fetched from Redis cache`);
+      return res.json(JSON.parse(cachedMovies));
+    }
+
+    // Fetch From DB
+    const randomMovies = await Movie.aggregate([
+      { $sample: { size: 10 } },
+    ]);
+
+    // Store in Redis
+    await redisClient.set(cacheKey, JSON.stringify(randomMovies), {
+      EX: 300, // keep low because random data should refresh quickly
+    });
+
+    logger.info(`Random movies fetched from DB`);
+
     res.json(randomMovies);
-    logger.info(`Random movies fetched`);
   } catch (error) {
     logger.error(`Error fetching random movies: ${error.message}`);
     res.status(500).json({ error: error.message });
   }
 };
+
 
 export {
   createMovie,

@@ -50,7 +50,7 @@ jobs:
             PREVIOUS_COMMIT=$(git rev-parse HEAD~1)
             echo "Previous commit: $PREVIOUS_COMMIT"
 
-            # ── Grafana basic auth setup ──────────────────────────
+
             echo "Setting up Grafana basic auth..."
             mkdir -p ./monitoring
             sudo rm -rf ./monitoring/.htpasswd
@@ -58,13 +58,13 @@ jobs:
               ${{ secrets.GRAFANA_BASIC_AUTH_USER }} \
               ${{ secrets.GRAFANA_BASIC_AUTH_PASSWORD }}
 
-            # Verify file was created correctly
+
             if [ ! -f ./monitoring/.htpasswd ]; then
               echo "❌ .htpasswd file creation failed!"
               exit 1
             fi
             echo "✅ .htpasswd created successfully"
-            # ─────────────────────────────────────────────────────
+
 
             echo "Rebuilding backend container..."
             docker compose -f docker-compose.prod.yml up -d --build || (
@@ -101,7 +101,7 @@ jobs:
 
             echo "✅ Backend deployed and healthy!"
 
-            # ── Grafana health check ──────────────────────────────
+
             echo "Checking Grafana health..."
             GRAFANA_PASSED=false
             for i in 1 2 3 4 5; do
@@ -119,7 +119,6 @@ jobs:
             else
               echo "✅ Grafana is healthy!"
             fi
-            # ─────────────────────────────────────────────────────
 
       - name: Configure Git
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
