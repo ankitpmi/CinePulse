@@ -105,7 +105,7 @@ jobs:
             echo "Checking Grafana health..."
             GRAFANA_PASSED=false
             for i in 1 2 3 4 5; do
-              if docker exec grafana curl -f http://localhost:3000/api/health; then
+              if docker exec grafana curl -f http://localhost:3000/healthStatus; then 
                 GRAFANA_PASSED=true
                 break
               fi
