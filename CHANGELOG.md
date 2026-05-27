@@ -1,3 +1,12 @@
+# [1.6.0](https://github.com/ankitpmi/CinePulse/compare/v1.5.0...v1.6.0) (2026-05-27)
+
+
+### Features
+
+* **redis:** update Redis cache keys for genre and movie retrieval ([24c1d57](https://github.com/ankitpmi/CinePulse/commit/24c1d574b02ab64153a08317f3b3967accfafc1a))
+
+
+
 # [1.5.0](https://github.com/ankitpmi/CinePulse/compare/v1.4.0...v1.5.0) (2026-05-27)
 
 
