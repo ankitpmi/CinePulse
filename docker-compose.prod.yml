@@ -38,12 +38,9 @@ services:
     container_name: cine-nginx
     ports:
       - "80:80"
-      - "443:443"
     volumes:
       - ./nginx.prod.conf:/etc/nginx/nginx.conf:ro
-      - /etc/letsencrypt:/etc/letsencrypt:ro
       - ./monitoring/.htpasswd:/etc/nginx/.htpasswd:ro
-      - /var/www/certbot:/var/www/certbot:ro
     depends_on:
       - backend
       - grafana
@@ -75,9 +72,9 @@ services:
     expose:
       - "3000"
     environment:
-      - GF_SERVER_ROOT_URL=https://cinepulse.duckdns.org/grafana/
+      - GF_SERVER_ROOT_URL=https://cinepulse.mytunnel.org/grafana/
       - GF_SERVER_SERVE_FROM_SUB_PATH=true
-      - GF_SERVER_DOMAIN=cinepulse.duckdns.org
+      - GF_SERVER_DOMAIN=cinepulse.mytunnel.org
       - GF_SERVER_PROTOCOL=http
       - GF_SERVER_ENFORCE_DOMAIN=false
     volumes:
@@ -90,6 +87,6 @@ networks:
     driver: bridge
 
 volumes:
-  mongo_data:
+  # mongo_data:
   grafana_data:
   redis_data:      # added
