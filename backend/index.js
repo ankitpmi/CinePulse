@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import path from "path";
 import cors from "cors";
 import client from 'prom-client';   
-
+import os from 'os';
 
 
 // Files
@@ -79,7 +79,8 @@ app.get("/apiOne", async (req, res) => {
 
         res.status(200).json({
             success: true,
-            message: "apiOne is working!!!"
+            message: "apiOne is working!!!",
+            instance: os.hostname()
         });
 
     } catch (error) {
@@ -100,7 +101,7 @@ app.get("/apiOne", async (req, res) => {
 
 app.get("/", (req, res) => {
     logger.info('Root endpoint called');
-    res.status(200).send('Backend server is running!!!');
+    res.status(200).send({message: 'Backend server is running!!!', instance: os.hostname()});
 })
 
 const __dirname = path.resolve();
